@@ -1,50 +1,48 @@
 <div>
-    
-    <h1 class="page-title text-uppercase">Emploi du Temps Global du departement Génie Informatique</h1>
+    <div class="pagetitle">
+        <h1>Emploi du Temps Global du departement Génie Informatique</h1>
+    </div>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{session('success')}}
         </div>
     @endif
+
+    <div class="row mb-1 mt-4">
+        <div class="col-md-2">
+            <select class="form-select" wire:model.live='niveau'>
+                <option value="0">niveau</option>
+                @foreach ($niveaux as $niv)
+                <option value="{{ $niv->id }}">{{ $niv->niveau }}</option>
+                @endforeach
+                <!-- Ajoutez d'autres options en fonction de vos niveaux -->
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" wire:model.live='session'>
+                <option value="0">Filtrer par une session</option>
+                @foreach ($sessions as $i)
+                <option value="{{ $i->id }}">{{ $i->session }}</option>
+                @endforeach
+                <!-- Ajoutez d'autres options en fonction de vos niveaux -->
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-control" type="search" wire:model.live='searchProgramme'>
+                <option value="0">Filtrer par programme</option>
+                @foreach ($programmes as $programme)
+                <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
+                @endforeach
+            </select>
+        </div>
+
+    </div>
     <div class="card mt-2">
         <div class="card-body">
-
-
-            <div class="row mb-1">
-                <div class="col-md-2">
-                    <select class="form-control" wire:model.live='niveau'>
-                        <option value="0">Filtrer par un niveau</option>
-                        @foreach ($niveaux as $niv)
-                        <option value="{{ $niv->id }}">{{ $niv->niveau }}</option>
-                        @endforeach
-                        <!-- Ajoutez d'autres options en fonction de vos niveaux -->
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <select class="form-control" wire:model.live='session'>
-                        <option value="0">Filtrer par une session</option>
-                        @foreach ($sessions as $i)
-                        <option value="{{ $i->id }}">{{ $i->session }}</option>
-                        @endforeach
-                        <!-- Ajoutez d'autres options en fonction de vos niveaux -->
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-control" type="search" wire:model.live='searchProgramme'>
-                        <option value="0">Filtrer par programme</option>
-                        @foreach ($programmes as $programme)
-                        <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="bg-primary p-2 white-bg text-center color"><span style="color:white">EMPLOI DU TEMPS</span>
-            </div>
             <div class="table-responsive-sm">
-                <table class="table table-hover table-centered table-bordered mb-0">
+                <table class="table table-hover table-centered table-bordered mb-0 mt-4">
                     <thead>
                         <tr>
                             <th>Horaires</th>
@@ -67,7 +65,6 @@
                             {{-- Debut du formulaire de modification --}}
                                 <tr wire:key='{{ $emploi->id }}'>
                                     <form action="" wire:submit.prevent='update' id="editemploi">
-                                            
                                         <td>
                                             <input type="text" wire:model='horaire'
                                                 value="{{ $emploi->horaire}}" class="form-control @error('horaire') is-invalid @enderror">
@@ -180,10 +177,10 @@
                                     <td>{{ $emploi->salle }}</td>
                                     <td class="d-flex gap-1 justify-content-end ">
 
-                                        <button wire:click="edit({{ $emploi->id }})" class="btn btn-info p-1 py-0 fs-4">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        <button wire:click="edit({{ $emploi->id }})" class="btn btn-primary p-1 py-0 fs-4">
+                                            <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <button wire:click='delete({{ $emploi->id }})' class="btn btn-danger p-1 py-0 fs-4"><i class="fa fa-trash"></i></button>
+                                        <button wire:click='delete({{ $emploi->id }})' class="btn btn-danger p-1 py-0 fs-4"><i class="bi bi-trash"></i></button>
                                     </td>
 
                                 </tr>
@@ -215,7 +212,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="matiere_id" id=""
-                                        class="form-control @error('matiere_id') is-invalid @enderror">
+                                        class="form-select @error('matiere_id') is-invalid @enderror">
                                         <option value="0">Matière</option>
                                         @foreach ($matieres as $matiere)
                                         <option value="{{ $matiere->id }}">{{ $matiere->matiere }}</option>
@@ -226,7 +223,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="enseignant_id" id=""
-                                        class="form-control @error('enseignant_id') is-invalid @enderror">
+                                        class="form-select @error('enseignant_id') is-invalid @enderror">
                                         <option value="0">Enseignant</option>
                                         @foreach ($enseignants as $enseignant)
                                         <option value="{{ $enseignant->id }}" wire:key="{{ $enseignant->id }}">{{ $enseignant->prenom }} {{
@@ -238,7 +235,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="programme_id" id=""
-                                        class="form-control @error('programme_id') is-invalid @enderror">
+                                        class="form-select @error('programme_id') is-invalid @enderror">
                                         <option value="0">programme</option>
                                         @foreach ($programmes as $programme)
                                         <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
@@ -249,7 +246,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="promotion_id" id=""
-                                        class="form-control @error('promotion_id') is-invalid @enderror">
+                                        class="form-select @error('promotion_id') is-invalid @enderror">
                                         <option value="0">Promotion</option>
                                         @foreach ($promotions as $promotion)
                                         <option value="{{ $promotion->id }}" wire:key="{{ $promotion->id }}">{{ $promotion->promotion }}</option>
@@ -259,7 +256,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="niveau_id" required
-                                        class="form-control @error('niveau_id') is-invalid @enderror">
+                                        class="form-select @error('niveau_id') is-invalid @enderror">
                                         <option value="0">Niveau</option>
                                         @foreach ($niveaux as $niv)
                                         <option value="{{ $niv->id }}" wire:key="{{ $niv->id }}">{{ $niv->niveau }}</option>
@@ -270,7 +267,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="semestre_id" required
-                                        class="form-control @error('semestre_id') is-invalid @enderror">
+                                        class="form-select @error('semestre_id') is-invalid @enderror">
                                         <option value="0">Semestre</option>
                                         @foreach ($semestres as $semestre)
                                         <option value="{{ $semestre->id }}" wire:key="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
@@ -281,7 +278,7 @@
                                 </td>
                                 <td>
                                     <select wire:model="session_id"
-                                        class="form-control @error('session_id') is-invalid @enderror" required>
+                                        class="form-select @error('session_id') is-invalid @enderror" required>
                                         <option value="0">Session</option>
                                         @foreach ($sessions as $i)
                                         <option value="{{ $i->id }}" wire:key="{{ $i->id }}">{{ $i->session }}</option>

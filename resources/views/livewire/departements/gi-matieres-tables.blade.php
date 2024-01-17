@@ -1,31 +1,30 @@
 <div>
-    <h2 class="page-title">
-        <span class="text-uppercase">Liste des matières du departement Génie Informatique</span>
-    </h2>
-        
-    <div class="row ">
-            <div class="col-md-2">
-                <select class="form-control" type="search" wire:model.live='semestre'>
-                    <option value="0">Filtrer par un semestre</option>
-                    @foreach ($semestres as $semestre)
-                        <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-control" type="search" wire:model.live='searchProgramme'>
-                    <option value="0">Filtrer par programme</option>
-                    @foreach ($programmes as $programme)
-                    <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <div class="pagetitle">
+        <h1>Liste des matières du departement Génie Informatique</h1>
     </div>
+        
+        <div class="row mt-4">
+                <div class="col-md-2">
+                    <select class="form-select" type="search" wire:model.live='semestre'>
+                        <option value="0">semestre</option>
+                        @foreach ($semestres as $semestre)
+                            <option value="{{ $semestre->id }}">{{ $semestre->semestre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" type="search" wire:model.live='searchProgramme'>
+                        <option value="0">programme</option>
+                        @foreach ($programmes as $programme)
+                        <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
+        </div>
     <div class="card mt-1">
         <div class="card-body">
-        <div class="bg-primary p-2 white-bg"><span style="color: white">Information sur les matières</span></div>
             <div class="table-responsive-sm">
-                <table class="table table-hover table-centered table-bordered mb-0">
+                <table class="table table-hover table-centered table-bordered mb-0 mt-4">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -38,7 +37,7 @@
 
                         @forelse ($matieres as $k => $matiere)
                             <tr>
-                                <td>{{ $k+1 }}</td>
+                                <th>{{ $k+1 }}</th>
                                 <td>{{ $matiere->matiere}}</td>
                                 <td>{{ $matiere->programme->nom}}</td>
                                 <td>{{ $matiere->semestre->semestre}}</td>

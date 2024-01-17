@@ -1,10 +1,12 @@
 @extends('backoffice.home')
 @section('title', $article->id ? "Modification de '$article->titre'" : "Ajout d'un article")
 @section('content')
-        <h1 class="page-title">@yield('title')</h1>
+<div class="pagetitle">
+    <h1>@yield('title')</h1>
+</div>
         <div class="card">
             <div class="card-body">
-                <form action="{{ $article->id ? route('admin.article.update', $article) : route('admin.article.store')}}" method="post" class="vstack gap-2" enctype="multipart/form-data">
+                <form class="mt-4" action="{{ $article->id ? route('admin.article.update', $article) : route('admin.article.store')}}" method="post" class="vstack gap-2" enctype="multipart/form-data">
                     @method($article->id ? "put" : "post")
                     @csrf
             

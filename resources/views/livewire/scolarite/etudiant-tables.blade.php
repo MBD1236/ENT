@@ -1,4 +1,8 @@
 <div class="mt-2">
+
+    <div class="pagetitle">
+        <h1>Liste des etudiants</h1>
+    </div>
     @if(session('success'))
     <div class="alert alert-success">
         {{session('success')}}
@@ -9,7 +13,7 @@
         {{session('danger')}}
     </div>
     @endif
-    <div class="row">
+    <div class="row mt-4">
         
         <div class="col-md-3">
                     <input value="" wire:model.live.debounce.200ms='searchIne' type="search" class="form-control"
@@ -33,8 +37,8 @@
     </div>
     <div class="card mt-2">
         <div class="card-body">
-            <div class="table-responsive-sm">
-                <table class="table table-hover table-centered mb-0">
+            <div class="table-responsive-sm mt-4">
+                <table class="table table-hover table-bordered mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -50,17 +54,17 @@
                     <tbody>
                         @foreach ( $etudiants as $k => $etudiant)
                         <tr>
-                            <td>{{ $k+1 }}</td>
+                            <th>{{ $k+1 }}</th>
                             <td>{{ $etudiant->nom}}</td>
                             <td>{{ $etudiant->prenom}}</td>
                             <td>{{ $etudiant->email}}</td>
                             <td>{{ $etudiant->pv}}</td>
                             <td>{{ $etudiant->ine}}</td>
                             <td class="d-flex gap-2 justify-content-end w-100">
-                                <a href="{{ route('scolarite.etudiant.edit', $etudiant) }}" class="btn btn-info"><i
-                                        class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="{{ route('scolarite.etudiant.edit', $etudiant) }}" class="btn btn-primary"><i
+                                        class="bi bi-pencil-square"></i></a>
                                 
-                                    <button class="btn btn-danger" wire:click='delete({{ $etudiant->id }})'><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger" wire:click='delete({{ $etudiant->id }})'><i class="bi bi-trash"></i></button>
                                 
                             </td>
                         </tr>

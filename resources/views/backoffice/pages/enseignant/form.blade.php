@@ -3,17 +3,18 @@
 @section('title', $enseignant->exists ? 'Editer un enseignant': 'Ajouter un enseignant')
 
 @section('content')
-
-<div class="card m-4">
-    <h3 class="page-title text-center f-400 fs-3">@yield('title')</h3>
+<div class="pagetitle">
+    <h1>@yield('title')</h1>
+</div>
+<div class="card mt-2">
     <div class="card-body col-lg-10 m-auto">
-        <form class="vstack  gap-2" action="{{ route($enseignant->exists ? 'admin.enseignant.update': 'admin.enseignant.store', $enseignant) }}" method="post" enctype="multipart/form-data">
+        <form class="vstack mt-4  gap-2" action="{{ route($enseignant->exists ? 'admin.enseignant.update': 'admin.enseignant.store', $enseignant) }}" method="post" enctype="multipart/form-data">
 
             @method($enseignant->exists ? 'put' : 'post')
             @csrf
 
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="col-6">
                     <div class="form-floating">
                         <input class="form-control @error('matricule') is-invalid @enderror" type="text" name="matricule" id="floatingmatricule" placeholder="Matricule" value="{{old('matricule', $enseignant->matricule)}}">
                         <label for="floatingmatricule">Matricule</label>
@@ -46,17 +47,17 @@
                  </div>
             </div>
 
-            <div class="form-floating mb-3">
+            <div class="form-floating">
                 <input class="form-control @error('telephone') is-invalid @enderror" type="tel" name="telephone" id="floatingTel" placeholder="+224623229188" value="{{old('telephone', $enseignant->telephone)}}">
                 <label for="floatingTel">Téléphone</label>
                 <div class="invalid-feedback">@error('telephone') {{ $message }} @enderror</div>
             </div>
-            <div class="form-floating mb-3">
+            <div class="form-floating">
                 <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="floatingInput" placeholder="diallo@gmail.com" value="{{old('email', $enseignant->email)}}">
                 <label for="floatingInput">Email address</label>
                 <div class="invalid-feedback">@error('email') {{ $message }} @enderror</div>
             </div>
-            <div class="form-floating mb-3">
+            <div class="form-floating">
                 <input class="form-control @error('adresse') is-invalid @enderror" type="adresse" name="adresse" id="floatingAdresse" placeholder="Adresse" value="{{old('adresse', $enseignant->adresse)}}">
                 <label for="floatingAdresse">Code postal/Adresse</label>
                 <div class="invalid-feedback">@error('adresse') {{ $message }} @enderror</div>

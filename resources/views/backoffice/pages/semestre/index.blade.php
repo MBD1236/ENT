@@ -3,7 +3,6 @@
 @section('title', 'Semestres')
 @section('content')
 
-<h3 class="page-title">@yield('title')</h3>
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -11,14 +10,24 @@
 </div>
 @endif
 
-<a href="{{ route('admin.semestre.create') }}" class="btn btn-primary">
-    <i class="fa fa-plus"></i>
-    <span>Ajouter</span>
-</a>
+<div class="mt-3">
+    <div class="pagetitle">
+        <h1>@yield('title')</h3>
+    </div>
+</div>
+
     <div class="card mt-2">
         <div class="card-body">
+            <div class="d-flex flex-row justify-content-end mb-2">
+                <div class="pt-2">
+                    <a href="{{ route('admin.semestre.create') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i>
+                        <span>Ajouter</span>
+                    </a>
+                </div>
+            </div>
             <div class="table-responsive-sm">
-                <table class="table table-hover table-centered mb-0">
+                <table class="table table-hover table-bordered mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -31,15 +40,15 @@
                         @foreach ( $semestres as $k => $semestre )
     
                         <tr>
-                            <td>{{ $k+1 }}</td>
+                            <th>{{ $k+1 }}</th>
                             <td>{{ $semestre->semestre }}</td>
                             <td class="d-flex gap-2 justify-content-end w-100">
-                                <a href="{{ route('admin.semestre.edit', $semestre) }}" class="btn btn-info"><i
-                                        class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="{{ route('admin.semestre.edit', $semestre) }}" class="btn btn-primary"><i
+                                        class="bi bi-pencil-square"></i></a>
                                 <form action="{{ route('admin.semestre.destroy', $semestre)}}" method="post">
                                     @method('delete')
                                     @csrf
-                                    <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

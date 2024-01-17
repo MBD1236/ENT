@@ -1,7 +1,9 @@
 <div>
 
-<h1 class="page-title">Inscription des etudiants</h1>
+<div class="pagetitle">
+<h1>Inscription des etudiants</h1>
 
+</div>
 @if($errors->any())
 <ul>
   @foreach ($errors->all() as $item)

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\ModuleEtudiant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ModuleEtudiant\DepartementRequest;
 use App\Models\Departement;
+use App\Models\Inscription;
+use App\Models\Niveau;
+use App\Models\Programme;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +16,16 @@ use Illuminate\Validation\Rule;
 
 class DepartementController extends Controller
 {
+
+
+        public function pdf()
+        {
+            $inscriptions = Inscription::query()->orderBy("created_at","desc")->get();
+
+            $pdf = Pdf::loadView('pdf', compact('inscriptions'));
+                // dd($pdf->stream());
+            return $pdf->stream('liste_etudiants.pdf');
+        }
     /**
      * Display a listing of the resource.
      */

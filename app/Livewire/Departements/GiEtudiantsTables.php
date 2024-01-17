@@ -6,6 +6,8 @@ use App\Models\Inscription;
 use App\Models\Niveau;
 use App\Models\Programme;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -15,6 +17,7 @@ class GiEtudiantsTables extends Component
     public $niveau = 0;
     public $searchProgramme = 0;
     // public $inscription;
+    
 
     public function generatePDF()
     {
@@ -36,24 +39,20 @@ class GiEtudiantsTables extends Component
         if ($this->niveau !== 0) {
             $inscription->where('niveau_id', $this->niveau);
         }
-        $data = [
-            'etudiants' => $inscription->get(),
-            'niveaux' => Niveau::all(),
-            'programmes' => Programme::where('departement_id', 1)->get(),
-        ];
 
-        $pdf = Pdf::loadView('livewire.departements.liste_etudiants', $data);
+        $inscriptions = $inscription->get();
+        $pdf = PDF::loadView('livewire.pdf.liste-etudiant', compact('inscriptions'));
+        return response()->streamDownload(function () use($pdf) {
+            echo  $pdf->stream();
+        }, 'listeGenieInfo.pdf');
 
-        return $pdf->download('liste_etudiants.pdf');
     }
-
-
 
     #[Layout("components.layouts.departement")]
     public function render()
     {
 
-        //1- pour un debut je retourne la liste des etudiants inscrits au departement Génie Informatique
+        // 1- pour un debut je retourne la liste des etudiants inscrits au departement Génie Informatique
         $inscription = Inscription::query()->orderBy("created_at","desc");
         $inscription->orWhereHas('programme', function ($inscription){
             $inscription->where('departement_id', 1);
@@ -80,5 +79,6 @@ class GiEtudiantsTables extends Component
             'niveaux' => Niveau::all(),
             'programmes' => Programme::where('departement_id',1)->get(),
         ]);
+        
     }
 }

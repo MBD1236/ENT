@@ -1,6 +1,6 @@
 @extends('backoffice.home')
 
-@section('title', 'Sessions')
+@section('title', 'Liste des sessions')
 @section('content')
 
 @if(session('success'))
@@ -9,41 +9,42 @@
     </div>
 @endif
 
-<div class="d-flex flex-row justify-content-between mt-3">
-    <div>
-        <h3 class="page-title justify-start fs-2">@yield('title')</h3>
-    </div>
-    <div>
-        <a href="{{ route('admin.session.create') }}" class="btn btn-primary mt-1">
-            <i class="fa fa-plus"></i>
-            <span>Ajouter une session</span>
-        </a>
+<div class="mt-3">
+    <div class="pagetitle">
+        <h1>@yield('title')</h3>
     </div>
 </div>
 
-<div class="card mt-2">
-    <div class="card-body py-2 px-2">
-        <h2 class="py-2 text-center">Liste des sessions</h2>
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex flex-row justify-content-end mb-2">
+            <div class="pt-2">
+                <a href="{{ route('admin.session.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i>
+                    <span>Ajouter</span>
+                </a>
+            </div>
+        </div>
         <div class="table-responsive-sm">
-            <table class="table table-hover table-centered table-bordered mb-0">
+            <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>session</th>
-                        <th class="text-end">Actions</th>
+                        <th scope="col">#</th>
+                        <th scope="col">session</th>
+                        <th scope="col" class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ( $sessions as $k => $session )
                     <tr>
-                        <td>{{ $k+1 }}</td>
-                        <td>{{ $session->session }}</td>
+                        <th scope="row">{{ $k+1 }}</td>
+                        <td>{{ $session->session }}</th>
                         <td class="d-flex gap-1 justify-content-end ">
-                            <a href="{{ route('admin.session.edit', $session) }}" class="btn btn-info p-1 py-lg-0 py-0 p-lg-1 fs-4"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{{ route('admin.session.edit', $session) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <form action="{{ route('admin.session.destroy', $session)}}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger p-1 py-0 fs-4"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

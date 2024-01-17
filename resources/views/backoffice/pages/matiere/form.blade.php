@@ -3,10 +3,12 @@
 @section('title', $matiere->id ? "Modification de '$matiere->matiere'" : "Création d'une matière")
 
 @section('content')
-<h1 class="page-title">@yield('title')</h1>
+<div class="pagetitle">
+    <h1>@yield('title')</h1>
+</div>
 <div class="card container">
     <div class="card-body">
-        <form action="{{ $matiere->id ? route('admin.matiere.update', $matiere) : route('admin.matiere.store')}}" method="post" class="vstack gap-2">
+        <form class="mt-4" action="{{ $matiere->id ? route('admin.matiere.update', $matiere) : route('admin.matiere.store')}}" method="post" class="vstack gap-2">
             @method($matiere->id ? "put" : "post")
             @csrf
     
@@ -19,7 +21,7 @@
             <div class="form-group">
             
                 <label for="semestre_id">Semestre</label>
-                <select name="semestre_id" id="semestre" class="form-control @error('semestre_id') is-invalid @enderror">
+                <select name="semestre_id" id="semestre" class="form-select @error('semestre_id') is-invalid @enderror">
                     <option value="">Sélectionner un semestre</option>
                     @foreach($semestres as $semestre)
                         <option @selected(old('semestre_id', $matiere->semestre_id == $semestre->id)) value="{{$semestre->id}}">{{ $semestre->semestre}}</option>
@@ -31,7 +33,7 @@
             <div class="form-group">
             
                 <label for="programme_id">Programme</label>
-                <select name="programme_id" id="programme" class="form-control @error('programme_id') is-invalid @enderror">
+                <select name="programme_id" id="programme" class="form-select @error('programme_id') is-invalid @enderror">
                     <option value="">Sélectionner un programme</option>
                     @foreach($programmes as $programme)
                         <option @selected(old('programme_id', $matiere->programme_id == $programme->id)) value="{{$programme->id}}">{{ $programme->nom}}</option>
@@ -40,7 +42,7 @@
                 <div class="invalid-feedback">@error('programme_id') {{ $message }} @enderror</div>
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary mt-2">
                 @if ($matiere->id) Modifier
                 @else Créer
                 @endif

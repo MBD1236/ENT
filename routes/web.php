@@ -58,6 +58,7 @@ Route::prefix('scolarite')->name('scolarite.')->group(function () {
 Route::prefix('genieinfo')->name("genieinfo.")->group(function(){
     Route::get("/etudiants", GiEtudiantsTables::class)->name('etudiantindex');
     Route::get("/matieres", GiMatieresTables::class)->name('matiereindex');
+    Route::get('/list', [DepartementController::class, 'pdf'])->name('pdf');
 
 
     Route::get('/emploi-temps', GiEmploisTables::class)->name('emploiindex');

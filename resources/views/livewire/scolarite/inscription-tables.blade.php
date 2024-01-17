@@ -1,13 +1,14 @@
 <div>
-    <h3 class="page-title mt-2">Liste des étudiants inscrits / reinscrits</h3>
-
+    <div class="pagetitle">
+         <h1 class=" mt-2">Liste des étudiants inscrits / reinscrits</h1>
+    </div>
     @if(session('success'))
     <div class="alert alert-success mt-2">
         {{session('success')}}
     </div>
     @endif
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-3">
             <form>
                 <div class="input-group">
@@ -21,7 +22,7 @@
     <div class="card mt-2">
         <div class="card-body">
             <div class="table-responsive-sm">
-                <table class="table table-hover table-centered mb-0">
+                <table class="table table-hover table-bordered mb-0 mt-4">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -39,7 +40,7 @@
 
                         @forelse ($inscriptions as $k => $inscription)
                         <tr>
-                            <td>{{ $k+1 }}</td>
+                            <th>{{ $k+1 }}</th>
                             <td>{{ $inscription->etudiant->ine}}</td>
                             <td>{{ $inscription->programme->departement->departement}}</td>
                             <td>{{ $inscription->programme->nom}}</td>
@@ -49,16 +50,16 @@
                             <td><img width="50px" src="{{asset('storage/'.$inscription->etudiant->photo) }}" alt="">
                             </td>
                             <td class="d-flex gap-2 justify-content-end w-100">
-                                <a href="{{ route('scolarite.inscription.edit', $inscription) }}" class="btn btn-info"><i
-                                        class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="{{ route('scolarite.inscription.edit', $inscription) }}" class="btn btn-primary p-1 py-lg-0 py-0 p-lg-1 fs-4"><i
+                                        class="bi bi-pencil-square"></i></a>
                                 
-                                <button wire:click='delete({{ $inscription->id }})' class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button wire:click='delete({{ $inscription->id }})' class="btn btn-danger p-1 py-lg-0 py-0 p-lg-1 fs-4"><i class="bi bi-trash"></i></button>
                             </td>
                         </tr>
                         @empty
                             <tr>
                                 <td colspan="9">
-                                    <div class="alert alert-info">Aucune donnée ne correspond à cette recherche !</div>
+                                    <div class="alert alert-primary">Aucune donnée ne correspond à cette recherche !</div>
                                 </td>
                             </tr>
                         @endforelse

@@ -1,6 +1,6 @@
 @extends('backoffice.home')
 
-@section('title', 'Enseignants')
+@section('title', 'Liste des enseignants')
 @section('content')
 
 @if(session('success'))
@@ -10,19 +10,23 @@
 @endif
 
 <div class="d-flex flex-row justify-content-between mt-3">
-    <div>
-        <h3 class="page-title justify-start fs-2">@yield('title')</h3>
-    </div>
-    <div>
-        <a href="{{ route('admin.enseignant.create') }}" class="btn btn-primary mt-1">Ajouter un enseignant</a>
+    <div class="pagetitle">
+        <h1>@yield('title')</h1>
     </div>
 </div>
 
 <div class="card mt-2">
     <div class="card-body py-2 px-2">
-        <h2 class="py-2 text-center">Liste des enseignants</h2>
+        <div class="d-flex flex-row justify-content-end mb-2">
+            <div class="pt-2">
+                <a href="{{ route('admin.enseignant.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-lg"></i>
+                    <span>Ajouter</span>
+                </a>
+            </div>
+        </div>
         <div class="table-responsive-sm">
-            <table class="table table-hover table-centered table-bordered mb-0">
+            <table class="table table-hover table-bordered mb-0">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -31,7 +35,7 @@
                         <th>Prénom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
-                        <th>Addresse</th>
+                        <th>Adresse</th>
                         <th>Photo</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -39,20 +43,20 @@
                 <tbody>
                     @foreach ( $enseignants as $k => $enseignant )
                     <tr>
-                        <td>{{ $k+1 }}</td>
+                        <th>{{ $k+1 }}</th>
                         <td>{{ $enseignant->matricule }}</td>
                         <td>{{ $enseignant->nom }}</td>
                         <td>{{ $enseignant->prenom }}</td>
                         <td>{{ $enseignant->email }}</td>
                         <td>{{ $enseignant->telephone }}</td>
                         <td>{{ $enseignant->adresse }}</td>
-                        <td><img width="20px" src="{{asset('storage/'.$enseignant->photo) }}" alt=""></td>
+                        <td><img width="50px" src="{{asset('storage/'.$enseignant->photo) }}" alt=""></td>
                         <td class="d-flex gap-1 justify-content-end ">
-                            <a href="{{ route('admin.enseignant.edit', $enseignant) }}" class="btn btn-info p-1 py-lg-0 py-0 p-lg-1 fs-4"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{{ route('admin.enseignant.edit', $enseignant) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <form action="{{ route('admin.enseignant.destroy', $enseignant)}}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger p-1 py-0 fs-4"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger p-1 py-0 fs-4"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

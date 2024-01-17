@@ -3,10 +3,13 @@
 @section('title', $partenaire->id ? "Edition du partenaire '$partenaire->nom'" : "Ajout d'un partenaire")
 
 @section('content')
-<h1 class="page-title">@yield('title')</h1>
+<div class="pagetitle">
+    <h1>@yield('title')</h1>
+</div>
+
 <div class="card">
     <div class="card-body">
-        <form action="{{ $partenaire->id ? route('admin.partenaire.update', $partenaire) : route('admin.partenaire.store')}}" method="post" class="vstack gap-2" enctype="multipart/form-data">
+        <form class="mt-4 vstack gap-2" action="{{ $partenaire->id ? route('admin.partenaire.update', $partenaire) : route('admin.partenaire.store')}}" method="post" class="vstack gap-2" enctype="multipart/form-data">
             @method($partenaire->id ? "put" : "post")
             @csrf
 

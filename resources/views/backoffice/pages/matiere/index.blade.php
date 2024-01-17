@@ -1,9 +1,8 @@
 @extends('backoffice.home')
 
-@section('title', 'Matieres')
+@section('title', 'Listes des matieres')
 @section('content')
 
-<h3 class="page-title">@yield('title')</h3>
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -11,16 +10,16 @@
 </div>
 @endif
 
-    <div class="d-flex justify-content-between">
+<div>
+    <div class="pagetitle">
+        <h1>@yield('title')</h1>
+    </div>
+</div>
+<div class="d-flex justify-content-between mt-2">
         <div>
-            <a href="{{ route('admin.matiere.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i>  
-                Ajouter
-            </a>
-        </div>
-        <div class="">
                 <form>
                     <div class="input-group">
-                        <select name="programme" id="programme" class="form-control" type="search">
+                        <select name="programme" id="programme" class="form-select" type="search">
                             <option value="">Filter par programme</option>
                             @foreach($programmes as $programme)
                                 <option value="{{$programme->id}}">{{ $programme->nom}}</option>
@@ -30,11 +29,16 @@
                     </div>
                 </form>
         </div>
+        <div>
+            <a href="{{ route('admin.matiere.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>  
+                Ajouter
+            </a>
+        </div>
     </div>
     <div class="card mt-2">
         <div class="card-body">
             <div class="table-responsive-sm">
-                <table class="table table-hover table-centered mb-0">
+                <table class="table table-hover table-bordered mb-0 mt-4">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -50,18 +54,18 @@
                             @forelse ( $matieres as $k => $matiere )
         
                                 <tr>
-                                    <td>{{ $k+1 }}</td>
+                                    <th>{{ $k+1 }}</th>
                                     <td>{{ $matiere->matiere }}</td>
                                     <td>{{ $matiere->semestre->semestre }}</td>
                                     <td>{{ $matiere->programme->nom }}</td>
                                     <td>{{ $matiere->programme->departement->departement }}</td>
                                     <td class="d-flex gap-2 justify-content-end w-100">
-                                        <a href="{{ route('admin.matiere.edit', $matiere) }}" class="btn btn-info"><i
-                                                class="fa-regular fa-pen-to-square"></i></a>
+                                        <a href="{{ route('admin.matiere.edit', $matiere) }}" class="btn btn-primary"><i
+                                                class="bi bi-pencil-square"></i></a>
                                         <form action="{{ route('admin.matiere.destroy', $matiere)}}" method="post">
                                             @method('delete')
                                             @csrf
-                                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
