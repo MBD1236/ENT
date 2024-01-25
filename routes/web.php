@@ -11,6 +11,7 @@ use App\Http\Controllers\ModuleEtudiant\EtudiantController;
 use App\Http\Controllers\ModuleEtudiant\InscriptionController;
 use App\Http\Controllers\moduleEtudiant\MatiereController;
 use App\Http\Controllers\ModuleEtudiant\NiveauController;
+use App\Http\Controllers\ModuleEtudiant\ProgrammeController;
 use App\Http\Controllers\ModuleEtudiant\PromotionController;
 use App\Http\Controllers\moduleEtudiant\SemestreController;
 use App\Http\Controllers\ModuleEtudiant\SessionController;
@@ -100,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function() {
     Route::resource('departement', DepartementController::class)->except('show');
     Route::resource('etudiant', EtudiantController::class)->except('show');
     Route::resource('inscription', InscriptionController::class)->except('show');
+    Route::resource('programme', ProgrammeController::class)->except('show');
 
     // import
     Route::post('etudiant/importer',[EtudiantController::class,'importer'])->name('etudiant.importer');

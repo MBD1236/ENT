@@ -50,6 +50,11 @@
             <i class="bi bi-circle"></i><span>Departements</span>
           </a>
         </li>
+        <li>
+          <a href="{{ route('admin.programme.index') }}">
+            <i class="bi bi-circle"></i><span>Programmes</span>
+          </a>
+        </li>
       </ul>
     </li><!-- End Gestions Nav -->
     
