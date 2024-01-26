@@ -62,6 +62,16 @@
                 <label for="floatingAdresse">Code postal/Adresse</label>
                 <div class="invalid-feedback">@error('adresse') {{ $message }} @enderror</div>
             </div>
+            <div class="form-floating">
+                    <select name="departement_id" id="floatingDepartement" class="form-select @error('departement_id') is-invalid @enderror">
+                        <option value=""></option>
+                        @foreach($departements as $departement)
+                            <option @selected(old('departement_id', $enseignant->departement_id == $departement->id)) value="{{$departement->id}}">{{ $departement->departement}}</option>
+                        @endforeach
+                    </select>
+                    <label for="floatingDepartement">departements</label>
+                    <div class="invalid-feedback">@error('departement_id') {{ $message }} @enderror</div>
+            </div>
 
             <button type="submit" class="btn btn-primary">
                 @if ($enseignant->id) Modifier un enseignant

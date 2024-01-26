@@ -33,6 +33,7 @@ class EnseignantRequest extends FormRequest
             'adresse' => ['required','string', 'min:2',],
             'photo' => ['required','image','mimes:jpeg,png,gif,jpg,svg'],
             // 'user_id' => ['required','numeric', 'exists:users,id'],
+            'departement_id' => ['required','numeric', 'exists:departements,id'],
         ];
     }
 }

@@ -16,6 +16,11 @@ class Enseignant extends Model
         'telephone',
         'email',
         'adresse',
+        'departement_id',
         'photo',
     ];
+
+    public function departement() {
+        return $this->belongsTo(Departement::class);
+    }
 }

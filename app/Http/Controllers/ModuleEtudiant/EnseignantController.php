@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ModuleEtudiant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ModuleEtudiant\EnseignantRequest;
+use App\Models\Departement;
 use App\Models\Enseignant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,8 +24,10 @@ class EnseignantController extends Controller
     public function create()
     {
         $enseignant = new Enseignant();
+        $departements = Departement::all();
         return view('backoffice.pages.enseignant.form', [
-            'enseignant' => $enseignant
+            'enseignant' => $enseignant,
+            'departements' => $departements
         ]);
     }
 
@@ -56,7 +59,8 @@ class EnseignantController extends Controller
     public function edit(Enseignant $enseignant)
     {
         return view('backoffice.pages.enseignant.form', [
-            'enseignant' => $enseignant
+            'enseignant' => $enseignant,
+            'departements' => Departement::all()
         ]);
     }
 
