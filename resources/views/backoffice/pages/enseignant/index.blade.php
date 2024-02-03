@@ -36,7 +36,6 @@
                         <th>Email</th>
                         <th>Téléphone</th>
                         <th>Adresse</th>
-                        <th>Departement</th>
                         <th>Photo</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -51,8 +50,7 @@
                         <td>{{ $enseignant->email }}</td>
                         <td>{{ $enseignant->telephone }}</td>
                         <td>{{ $enseignant->adresse }}</td>
-                        <td>{{ $enseignant->departement->departement ?? 'Mission' }}</td>
-                        <td><img width="50px" src="{{asset('storage/'.$enseignant->photo) }}" alt=""></td>
+                        <td><img width="25px" src="{{asset('storage/'.$enseignant->photo) }}" alt=""></td>
                         <td class="d-flex gap-1 justify-content-end ">
                             <a href="{{ route('admin.enseignant.edit', $enseignant) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
                             <form action="{{ route('admin.enseignant.destroy', $enseignant)}}" method="post">

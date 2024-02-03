@@ -11,13 +11,64 @@
 --------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
+  --tz-footer-height: 60px;
 }
 
+.options {
+  font-family:sans-serif;
+}
+
+
 body {
-  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+html {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
   background: #f6f9ff;
   color: #444444;
 }
+
+/* pour matiere */
+.licence a {
+  border: 1px solid rgb(9, 10, 24);
+  color: white;
+}
+
+.licence a:hover{
+  border: 2px solid rgb(255, 255, 255);
+  color: white;
+  background: rgb(0, 68, 136);
+}
+
+
+/* pour l'emplois de temps */
+.emplois button:hover{
+  background: rgb(22, 22, 68);
+  color: white;
+}
+
+/* search boutton */
+.bntSearch {
+  margin-left: -30px;
+  margin-top: 8px;
+}
+
+/* .se span:hover {
+  display: none;
+} */
+
+/* body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
+  background: #f6f9ff;
+  color: #444444;
+} */
 
 a {
   color: #4154f1;
@@ -42,8 +93,8 @@ h6 {
 # Main
 --------------------------------------------------------------*/
 #main {
-  margin-top: 60px;
-  padding: 20px 30px;
+  margin-top: 80px;
+  padding: 10px 20px 10px 0px;
   transition: all 0.3s;
 }
 
@@ -382,14 +433,13 @@ h6 {
   height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
-  padding-left: 20px;
+  padding-left: 29px;
   /* Toggle Sidebar Button */
   /* Search Bar */
 }
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
-  padding-left: 10px;
   cursor: pointer;
   color: #012970;
 }
@@ -397,6 +447,10 @@ h6 {
 .header .search-bar {
   min-width: 360px;
   padding: 0 20px;
+}
+
+.ent-ist {
+  max-width: 250px;
 }
 
 @media (max-width: 1199px) {
@@ -602,7 +656,7 @@ h6 {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 230px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -633,7 +687,7 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 300px;
+    margin-left: 250px;
   }
 }
 
@@ -651,7 +705,7 @@ h6 {
   }
 
   .toggle-sidebar .sidebar {
-    left: -300px;
+    left: -250px;
   }
 }
 
@@ -1213,6 +1267,10 @@ h6 {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
+#footer {
+  margin-top: auto;
+}
+
 .footer {
   padding: 20px 0;
   font-size: 14px;
@@ -1231,3 +1289,4 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+

@@ -1,42 +1,45 @@
 @extends('backoffice.home')
 
-@section('title', $programme->id ? "Edition du '$programme->nom'" : "Ajout d'un programme")
+@section('title', $programme->exists ? 'Editer un programme/filiere': 'Ajouter un programme/filiere')
 
 @section('content')
-<div class="pagetitle"><h1>@yield('title')</h1></div>
-<div class="card container">
-    <div class="card-body">
-        <form action="{{ $programme->id ? route('admin.programme.update', $programme) : route('admin.programme.store')}}" method="post" class="vstack gap-2">
-            @method($programme->id ? "put" : "post")
+<div class="pagetitle">
+    <h1>@yield('title')</h1>
+</div>
+<div class="card mt-2">
+    <div class="card-body col-lg-10 m-auto">
+        <form class="vstack mt-4  gap-2" action="{{ route($programme->exists ? 'admin.programme.update': 'admin.programme.store', $programme) }}" method="post" enctype="multipart/form-data">
+
+            @method($programme->exists ? 'put' : 'post')
             @csrf
 
-            <div class="col-12 mt-4">
-                <div class="form-floating">
-                    <input type="text" name="nom" id="floatingnom" value="{{old('nom', $programme->nom)}}" class="form-control @error('nom') is-invalid @enderror">
-                    <label for="floatingnom">programme</label>
-                    <div class="invalid-feedback">@error('nom') {{ $message }} @enderror</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+                    <div class="form-floating">
+                        <input class="form-control @error('programme') is-invalid @enderror" type="text" name="programme" id="floatingprogramme" placeholder="Nom du programme" value="{{old('programme', $programme->programme)}}">
+                        <label for="floatingprogramme">Programme / Fileres</label>
+                        <div class="invalid-feedback">@error('programme') {{ $message }} @enderror</div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 mt-2">
-                <div class="form-floating">
-                    <select name="departement_id" id="floatingdepartement" class="form-select @error('departement_id') is-invalid @enderror">
-                        <option value=""></option>
-                        @foreach($departements as $departement)
-                            <option @selected(old('departement_id', $programme->departement_id == $departement->id)) value="{{$departement->id}}">{{ $departement->departement}}</option>
-                        @endforeach
-                    </select>
-                    <label for="floatingdepartement">departements</label>
-                    <div class="invalid-feedback">@error('departement_id') {{ $message }} @enderror</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 my-2">            
+                    <div class="form-group">           
+                        <select name="departement_id" id="floatingdepartment_id" class="py-3 form-select @error('departement_id') is-invalid @enderror">
+                            <option value="">Sélectionner un departement</option>
+                            @foreach($departements as $key => $departement)
+                                <option @selected(old('departement_id', $programme->departement_id == $departement->id)) value="{{$departement->id}}" class="py-2">{{ $departement->departement}}</option>
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">@error('departement_id') {{ $message }} @enderror</div>
+                    </div>
                 </div>
             </div>
 
-            <button type="submit " class="btn btn-primary">
-                @if ($programme->id) Modifier
-                @else Créer
+            <button type="submit" class="btn btn-primary">
+                @if ($programme->id) Modifier un programme
+                @else Créer un nouveau programme
                 @endif
             </button>
         </form>
     </div>
 </div>
-
 @endsection

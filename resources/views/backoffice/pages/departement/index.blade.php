@@ -28,17 +28,17 @@
                     <tr>
                         <th>#</th>
                         <th>Departements</th>
-                        <th>Code departement</th>
+                        <th>Ucode</th>
                         <th>Email</th>
                         <th>Telephone</th>
                         <th>Addresse</th>
                         <th>Photo</th>
-                        <th>Description</th>
+                        {{-- <th>Description</th> --}}
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $departements as $k => $departement )
+                    @foreach ($departements as $k => $departement )
                     <tr>
                         <td>{{ $k+1 }}</td>
                         <td>{{ $departement->departement }}</td>
@@ -47,13 +47,13 @@
                         <td>{{ $departement->telephone }}</td>
                         <td>{{ $departement->adresse }}</td>
                         <td><img width="20px" src="{{asset('storage/'.$departement->photo) }}" alt=""></td>
-                        <td>{{ substr($departement->description, 0, 10)}}...</td>
+                        {{-- <td>{{ substr($departement->description, 0, 10)}}...</td> --}}
                         <td class="d-flex gap-1 justify-content-end ">
-                            <a href="{{ route('admin.departement.edit', $departement) }}" class="btn btn-primary p-1 py-lg-0 py-0 p-lg-1 fs-4"><i class="bi bi-pencil-square"></i></a>
+                            <a href="{{ route('admin.departement.edit', $departement) }}" class="btn btn-primary p-1 py-lg-0 py-0 p-lg-1 fs-6"><i class="bi bi-pencil-square"></i></a>
                             <form action="{{ route('admin.departement.destroy', $departement)}}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger p-1 py-0 fs-4"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-danger p-1 py-0 fs-6"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

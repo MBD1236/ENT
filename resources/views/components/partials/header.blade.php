@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>ENT-IST MAMOU</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -31,17 +31,18 @@
 
   {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
+  @livewireStyles
+  
 </head>
 
 <body>
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
-
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between ent-ist">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="{{ asset('backend/assets/img/logo.png') }}" alt="">
-        <span class="d-none d-lg-block">ent ist</span>
+        <span class="d-none d-lg-block fs-5 mx-2">ENT IST-MAMOU</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

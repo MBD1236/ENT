@@ -3,13 +3,14 @@
 
 @section('content')
 <h1 class="page-title">@yield('title')</h1>
-@if($errors->any())
+{{-- @if($errors->any())
 <ul>
   @foreach ($errors->all() as $item)
       <li>{{ $item }}</li>
   @endforeach
 </ul>
-@endif
+@endif --}}
+
 <div class="card container">
     <div class="row mt-4">
     <div class="d-lg-flex align-items-end justify-content-end">
@@ -186,7 +187,7 @@
                         <select name="programme_id" id="programme_id" class="form-control @error('programme_id') is-invalid @enderror">
                             <option value="">Sélectionner un programme</option>
                             @foreach($programmes as $programme)
-                                <option @selected(old('programme_id', $inscription->programme_id == $programme->id)) value="{{$programme->id}}">{{ $programme->nom}}</option>
+                                <option @selected(old('programme_id', $inscription->programme_id == $programme->id)) value="{{$programme->id}}">{{ $programme->programme}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-feedback">@error('programme_id') {{ $message }} @enderror</div>
@@ -194,8 +195,8 @@
                 </div>  
             </div>
             <button type="submit" class="btn btn-primary">
-                @if ($inscription->id) Modifier
-                @else Créer
+                @if ($inscription->id) Modifier un étudiant
+                @else Inscrire un nouvelle étudiant
                 @endif
             </button>
         </form>

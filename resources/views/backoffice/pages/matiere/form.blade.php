@@ -36,7 +36,7 @@
                 <select name="programme_id" id="programme" class="form-select @error('programme_id') is-invalid @enderror">
                     <option value="">Sélectionner un programme</option>
                     @foreach($programmes as $programme)
-                        <option @selected(old('programme_id', $matiere->programme_id == $programme->id)) value="{{$programme->id}}">{{ $programme->nom}}</option>
+                        <option @selected(old('programme_id', $matiere->programme_id == $programme->id)) value="{{$programme->id}}">{{ $programme->programme}}</option>
                     @endforeach
                 </select>
                 <div class="invalid-feedback">@error('programme_id') {{ $message }} @enderror</div>

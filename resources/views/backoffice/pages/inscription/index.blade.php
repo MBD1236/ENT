@@ -1,9 +1,9 @@
 @extends('backoffice.home')
 
-@section('title', 'Liste des etudiants inscrit / reinscrit')
+@section('title', 'Liste de tous les étudiants réinscrit')
 @section('content')
 
-<h3 class="page-title">@yield('title')</h3>
+<h3 class="page-title py-3 text-primary fw-bold text-center">@yield('title')</h3>
 
 @if(session('success'))
 <div class="alert alert-success">
@@ -11,25 +11,26 @@
 </div>
 @endif
 
-<div class="row">
-    <div class="col-md-4">
-        <a href="{{ route('admin.inscription.create') }}" class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            <span>Ajouter</span>
-        </a>
+<div class="card mb-0 py-3">
+    <div class="card-body d-flex justify-content-between">
+        <div>
+            <a href="{{ route('admin.inscription.create') }}" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
+                <span>Inscription / Reinscription</span>
+            </a>
+        </div>
+        <div>
+            <form>
+                <div class="input-group"> 
+                    <input  name="searchEtudiant" type="search" class="form-control" placeholder="Rechercher" value="{{ $lastvalue }}">
+                    <button type="submit" class="btn btn-primary"><span class="ri-search-line search-icon text-muted"></span></button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="col-md-4">
-        <form>
-            <div class="input-group"> 
-                <input  name="searchEtudiant" type="search" class="form-control" placeholder="Rechercher" value="{{ $lastvalue }}">
-                <button type="submit" class="btn btn-primary"><span class="ri-search-line search-icon text-muted"></span></button>
-            </div>
-        </form>
-    </div>
-    
 </div>
 
-<div class="card mt-2">
+<div class="card">
     <div class="card-body">
         <div class="table-responsive-sm">
             <table class="table table-hover table-centered mb-0">
@@ -52,19 +53,18 @@
                     <tr>
                         <td>{{ $k+1 }}</td>
                         <td>{{ $inscription->etudiant->ine}}</td>
-                        <td>{{ $inscription->programme->departement->departement}}</td>
-                        <td>{{ $inscription->programme->nom}}</td>
+                        <td>{{ $inscription->etudiant->prenom}} {{ $inscription->etudiant->nom}}</td>
+                        <td>{{ $inscription->programme->programme}}</td>
                         <td>{{ $inscription->promotion->promotion}}</td>
                         <td>{{ $inscription->niveau->niveau}}</td>
                         <td>{{ $inscription->session->session}}</td>
-                        <td><img width="50px" src="{{asset('storage/'.$inscription->etudiant->photo) }}" alt=""></td>
+                        <td><img width="20px" height="20px" src="{{asset('storage/'.$inscription->etudiant->photo) }}" alt=""></td>
                         <td class="d-flex gap-2 justify-content-end w-100">
-                            <a href="{{ route('admin.inscription.edit', $inscription) }}" class="btn btn-info"><i
-                                    class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{{ route('admin.inscription.edit', $inscription) }}" class="btn btn-primary py-0 px-1 fs-6"><i class="bi bi-pencil-square"></i></a>
                             <form action="{{ route('admin.inscription.destroy', $inscription)}}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger py-0 px-1 fs-6"><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>

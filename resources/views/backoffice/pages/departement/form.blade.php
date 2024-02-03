@@ -13,21 +13,25 @@
             @method($departement->exists ? 'put' : 'post')
             @csrf
 
-            <div class="form-floating">
-                <input class="form-control @error('departement') is-invalid @enderror" type="text" name="departement" id="floatingDepartement" placeholder="Nom du departement" value="{{old('departement', $departement->departement)}}">
-                <label for="floatingDepartement">Departement</label>
-                <div class="invalid-feedback">@error('departement') {{ $message }} @enderror</div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-floating">
+                        <input class="form-control @error('departement') is-invalid @enderror" type="text" name="departement" id="floatingDepartement" placeholder="Nom du departement" value="{{old('departement', $departement->departement)}}">
+                        <label for="floatingDepartement">Departement</label>
+                        <div class="invalid-feedback">@error('departement') {{ $message }} @enderror</div>
+                    </div>
+                </div>
             </div>
 
             <div class="row">
-                <div class="col-6">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-floating">
                         <input class="form-control @error('codedepartement') is-invalid @enderror" type="text" name="codedepartement" id="floatingCodedepartement" placeholder="Code departement" value="{{old('codedepartement', $departement->codedepartement)}}">
                         <label for="floatingCodedepartement">Code departement</label>
                         <div class="invalid-feedback">@error('codedepartement') {{ $message }} @enderror</div>
                     </div>
                 </div>
-                 <div class="col-6">
+                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="form-floating">
                         <input class="form-control @error('photo') is-invalid @enderror" type="file" name="photo" id="floatingPhoto" placeholder="photo" value="{{old('photo', $departement->photo)}}">
                         <label for="floatingPhoto">Photo</label>

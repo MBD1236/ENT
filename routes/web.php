@@ -79,13 +79,13 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return view('backoffice.home');
+    return view('backoffice.dashboard');
 });
 
 
 Route::name('admin.')->group(function () {
     Route::resource('home', HomeController::class)->except('create','store','edit','update','destroy','show');
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('galerie', GalerieController::class)->except('show');
     Route::resource('article', ArticleController::class)->except('show');
     Route::resource('partenaire', PartenaireController::class)->except('show');

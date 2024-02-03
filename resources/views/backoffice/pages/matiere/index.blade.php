@@ -17,17 +17,17 @@
 </div>
 <div class="d-flex justify-content-between mt-2">
         <div>
-                <form>
-                    <div class="input-group">
-                        <select name="programme" id="programme" class="form-select" type="search">
-                            <option value="">Filter par programme</option>
-                            @foreach($programmes as $programme)
-                                <option value="{{$programme->id}}">{{ $programme->nom}}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn btn-primary"><span class="ri-search-line search-icon text-muted"></span></button>
-                    </div>
-                </form>
+            <form>
+                <div class="input-group">
+                    <select name="programme" id="programme" class="form-select" type="search">
+                        <option value="">Filter par programme</option>
+                        @foreach($programmes as $programme)
+                            <option value="{{$programme->id}}">{{ $programme->programme}}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary"><span class="ri-search-line search-icon text-muted"></span></button>
+                </div>
+            </form>
         </div>
         <div>
             <a href="{{ route('admin.matiere.create') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i>  
@@ -57,7 +57,7 @@
                                     <th>{{ $k+1 }}</th>
                                     <td>{{ $matiere->matiere }}</td>
                                     <td>{{ $matiere->semestre->semestre }}</td>
-                                    <td>{{ $matiere->programme->nom }}</td>
+                                    <td>{{ $matiere->programme->programme }}</td>
                                     <td>{{ $matiere->programme->departement->departement }}</td>
                                     <td class="d-flex gap-2 justify-content-end w-100">
                                         <a href="{{ route('admin.matiere.edit', $matiere) }}" class="btn btn-primary"><i
@@ -69,8 +69,12 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @empty
-                                <td>Aucune donnée ne correspond à cette recherche</td>
+                             @empty
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="alert alert-info text-center">Aucune donnée ne correspond à cette recherche !</div>
+                                    </td>
+                                </tr>
                             @endforelse
                     </tbody>
                 </table>
