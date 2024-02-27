@@ -9,7 +9,7 @@ use App\Models\Niveau;
 use App\Models\Programme;
 use App\Models\Promotion;
 use App\Models\Semestre;
-use App\Models\Session;
+use App\Models\AnneeUniversitaire;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -17,7 +17,7 @@ class SeEmploisTables extends Component
 {
     
     public $niveau = 0;
-    public $session = 0;
+    public $annee_universitaire = 0;
     public $searchProgramme = 0;
     public $addline = false;
     public $editingId;
@@ -30,7 +30,7 @@ class SeEmploisTables extends Component
     public $niveau_id;
     public $promotion_id;
     public $semestre_id;
-    public $session_id;
+    public $annee_universitaire_id;
     public $salle;
 
 
@@ -43,7 +43,7 @@ class SeEmploisTables extends Component
         'niveau_id' => ['required'],
         'promotion_id' => ['required'],
         'semestre_id' => ['required'],
-        'session_id' => ['required'],
+        'annee_universitaire_id' => ['required'],
         'salle' => ['required','string'],
 
     ];
@@ -69,8 +69,8 @@ class SeEmploisTables extends Component
         if($this->niveau !== 0) {
             $query->where("niveau_id", $this->niveau);
         }
-        if($this->session !== 0) {
-            $query->where("session_id", $this->session);
+        if($this->annee_universitaire !== 0) {
+            $query->where("annee_universitaire_id", $this->annee_universitaire);
         }
 
         return view('livewire.departements.se-emplois-tables',[
@@ -80,7 +80,7 @@ class SeEmploisTables extends Component
             'niveaux' => Niveau::all(),
             'promotions' => Promotion::all(),
             'semestres' => Semestre::all(),
-            'sessions' => Session::orderBy('created_at', 'desc')->paginate(1),
+            'annee_universitaires' => AnneeUniversitaire::orderBy('created_at', 'desc')->paginate(1),
             'programmes' => Programme::where('departement_id',3)->get(),
         ]);
     }
@@ -102,7 +102,7 @@ class SeEmploisTables extends Component
         $this->niveau_id = $emploi->niveau_id;
         $this->promotion_id = $emploi->promotion_id;
         $this->semestre_id = $emploi->semestre_id;
-        $this->session_id = $emploi->session_id;
+        $this->annee_universitaire_id = $emploi->annee_universitaire_id;
         $this->salle = $emploi->salle;
     }
 
@@ -125,7 +125,7 @@ class SeEmploisTables extends Component
     public function save() {
         $data = $this->validate();
         EmploiTemps::create($data);
-        $this->reset('horaire','jour','salle','matiere_id','enseignant_id','session_id',
+        $this->reset('horaire','jour','salle','matiere_id','enseignant_id','annee_universitaire_id',
             'promotion_id','niveau_id','programme_id',);
 
         session()->flash('success', 'Ajout effectuée avec succès!');

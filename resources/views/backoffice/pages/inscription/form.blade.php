@@ -151,13 +151,13 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
                     <div class="form-floating">
-                        <select name="session_id" id="session_id" class="form-control @error('session_id') is-invalid @enderror">
-                            <option value="">Sélectionner une session</option>
-                            @foreach($sessions as $session)
-                                <option @selected(old('session_id', $inscription->session_id == $session->id)) value="{{$session->id}}">{{ $session->session}}</option>
+                        <select name="annee_universitaire_id" id="annee_universitaire_id" class="form-control @error('annee_universitaire_id') is-invalid @enderror">
+                            <option value="">Sélectionner une année universitaire</option>
+                            @foreach($annee_universitaires as $annee_universitaire)
+                                <option @selected(old('annee_universitaire_id', $inscription->annee_universitaire_id == $annee_universitaire->id)) value="{{$annee_universitaire->id}}">{{ $annee_universitaire->annee_universitaire}}</option>
                             @endforeach
                         </select>
-                        <div class="invalid-feedback">@error('session_id') {{ $message }} @enderror</div>
+                        <div class="invalid-feedback">@error('annee_universitaire_id') {{ $message }} @enderror</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">

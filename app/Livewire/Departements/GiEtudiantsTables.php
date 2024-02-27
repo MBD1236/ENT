@@ -13,11 +13,11 @@ use Livewire\Component;
 
 class GiEtudiantsTables extends Component
 {
-    public string $session = '';
+    public string $annee_universitaire = '';
     public $niveau = 0;
     public $searchProgramme = 0;
     // public $inscription;
-    
+
 
     public function generatePDF()
     {
@@ -29,10 +29,10 @@ class GiEtudiantsTables extends Component
         if ($this->searchProgramme !== 0){
             $inscription->where('programme_id', $this->searchProgramme);
         }
-        //3- On filtre les etudiants du departement Génie Informatique par session donnée
-        if ($this->session !== '') {
-            $inscription->WhereHas('session', function ($inscription){
-                $inscription->where('session', $this->session);
+        //3- On filtre les etudiants du departement Génie Informatique par annee_universitaire donnée
+        if ($this->annee_universitaire !== '') {
+            $inscription->WhereHas('annee_universitaire', function ($inscription){
+                $inscription->where('annee_universitaire', $this->annee_universitaire);
             }); 
         }
         //3- On filtre les etudiants du departement Génie Informatique par niveau donné
@@ -61,10 +61,10 @@ class GiEtudiantsTables extends Component
         if ($this->searchProgramme !== 0){
             $inscription->where('programme_id', $this->searchProgramme);
         }
-        //3- On filtre les etudiants du departement Génie Informatique par session donnée
-        if ($this->session !== '') {
-            $inscription->WhereHas('session', function ($inscription){
-                $inscription->where('session', $this->session);
+        //3- On filtre les etudiants du departement Génie Informatique par annee_universitaire donnée
+        if ($this->annee_universitaire !== '') {
+            $inscription->WhereHas('annee_universitaire', function ($inscription){
+                $inscription->where('annee_universitaire', $this->annee_universitaire);
             }); 
         }
         //3- On filtre les etudiants du departement Génie Informatique par niveau donné
@@ -73,12 +73,12 @@ class GiEtudiantsTables extends Component
         }
         /* Si les trois conditions sont reunies: On aura la liste des etudiants du departement
         Génie Informatique qui font le programme Génie Informatique et le niveau tel(ex:Licence 1)
-        et la session (ex:2023-2024) */
+        et la annee_universitaire (ex:2023-2024) */
         return view('livewire.departements.gi-etudiants-tables',[
             'etudiants' => $inscription->get(),
             'niveaux' => Niveau::all(),
             'programmes' => Programme::where('departement_id',1)->get(),
         ]);
-        
+
     }
 }

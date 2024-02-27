@@ -22,9 +22,9 @@
 
         <div class="col-md-2">
             <select class="form-select" wire:model.live='session'>
-                <option value="0">Filtrer par une session</option>
-                @foreach ($sessions as $i)
-                <option value="{{ $i->id }}">{{ $i->session }}</option>
+                <option value="0">Filtrer par une année universitaire</option>
+                @foreach ($annee_universitaires as $i)
+                <option value="{{ $i->id }}">{{ $i->annee_universitaire }}</option>
                 @endforeach
                 <!-- Ajoutez d'autres options en fonction de vos niveaux -->
             </select>
@@ -53,7 +53,7 @@
                             <th>Promotion</th>
                             <th>Niveau</th>
                             <th>Semestre</th>
-                            <th>Session</th>
+                            <th>Année Universitaire</th>
                             <th>Salle</th>
                             <th>Actions</th>
                         </tr>
@@ -141,14 +141,14 @@
                                             <div class="invalid-feedback">@error('semestre_id') {{ $message }} @enderror</div>
                                         </td>
                                         <td>
-                                            <select wire:model='session_id'
-                                                class="form-control @error('session_id') is-invalid @enderror" required>
-                                                <option value="0">Session</option>
-                                                @foreach ($sessions as $i)
-                                                <option @selected($emploi->session_id == $i->id) value="{{ $i->id }}" wire:key="{{ $i->id }}">{{ $i->session }}</option>
+                                            <select wire:model='annee_universitaire_id'
+                                                class="form-control @error('annee_universitaire_id') is-invalid @enderror" required>
+                                                <option value="0">Année Universitaire</option>
+                                                @foreach ($annee_universitaires as $i)
+                                                <option @selected($emploi->annee_universitaire_id == $i->id) value="{{ $i->id }}" wire:key="{{ $i->id }}">{{ $i->annee_universitaire }}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="invalid-feedback">@error('session_id') {{ $message }} @enderror</div>
+                                            <div class="invalid-feedback">@error('annee_universitaire_id') {{ $message }} @enderror</div>
                                         </td>
                                         <td>
                                             <input wire:model='salle' type="text" value="{{ $emploi->salle }}" class="form-control @error('salle') is-invalid @enderror">
@@ -277,14 +277,14 @@
                                     <div class="invalid-feedback">@error('semestre_id') {{ $message }} @enderror</div>
                                 </td>
                                 <td>
-                                    <select wire:model="session_id"
-                                        class="form-select @error('session_id') is-invalid @enderror" required>
+                                    <select wire:model="annee_universitaire_id"
+                                        class="form-select @error('annee_universitaire_id') is-invalid @enderror" required>
                                         <option value="0">Session</option>
                                         @foreach ($sessions as $i)
                                         <option value="{{ $i->id }}" wire:key="{{ $i->id }}">{{ $i->session }}</option>
                                         @endforeach
                                     </select>
-                                    <div class="invalid-feedback">@error('session_id') {{ $message }} @enderror</div>
+                                    <div class="invalid-feedback">@error('annee_universitaire_id') {{ $message }} @enderror</div>
                                 </td>
                                 <td>
                                     <input type="text" wire:model="salle" required class="form-control @error('salle') is-invalid @enderror">

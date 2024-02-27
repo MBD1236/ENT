@@ -25,7 +25,7 @@
                   <select class="form-select" type="search" wire:model.live='searchProgramme'>
                       <option value="0">Filtrer par programme</option>
                       @foreach ($programmes as $programme)
-                      <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
+                      <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->programme }}</option>
                       @endforeach
                   </select>
               </div>
@@ -67,7 +67,7 @@
                             <td>{{ $etudiant->etudiant->prenom}}</td>
                             <td>{{ $etudiant->niveau->niveau}}</td>
                             <td>{{ $etudiant->promotion->promotion}}</td>
-                            <td>{{ $etudiant->programme->nom}}</td>
+                            <td>{{ $etudiant->programme->programme}}</td>
 
                         </tr>
                         @empty

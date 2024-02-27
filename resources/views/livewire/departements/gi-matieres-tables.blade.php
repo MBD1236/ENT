@@ -16,7 +16,7 @@
                     <select class="form-select" type="search" wire:model.live='searchProgramme'>
                         <option value="0">programme</option>
                         @foreach ($programmes as $programme)
-                        <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
+                        <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->programme }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -39,7 +39,7 @@
                             <tr>
                                 <th>{{ $k+1 }}</th>
                                 <td>{{ $matiere->matiere}}</td>
-                                <td>{{ $matiere->programme->nom}}</td>
+                                <td>{{ $matiere->programme->programme}}</td>
                                 <td>{{ $matiere->semestre->semestre}}</td>
                             </tr>
                         @empty

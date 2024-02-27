@@ -39,6 +39,7 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
+
     <div class="d-flex align-items-center justify-content-between ent-ist">
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="{{ asset('backend/assets/img/logo.png') }}" alt="">
@@ -208,20 +209,20 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="{{ asset('backend/assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user() ? Auth::user()->nom : '' }}</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>{{ Auth::user() ? Auth::user()->allName(Auth::user()) : '' }}</h6>
+              <span>{{ Auth::user() ? Auth::user()->matricule : '' }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.show') }}">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
@@ -230,8 +231,8 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+            {{-- <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('profile.show') }}">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -244,17 +245,23 @@
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
-              </a>
+              </a> --}}
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
+              <form method="POST" action="{{ route('logout') }}" x-data>
+                @method('post')
+                @csrf
+
+                <button class="dropdown-item d-flex align-items-center">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </button>
+                
+            </form>
             </li>
 
           </ul><!-- End Profile Dropdown Items -->

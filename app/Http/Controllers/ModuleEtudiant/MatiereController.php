@@ -27,7 +27,7 @@ class MatiereController extends Controller
         return view('backoffice.pages.matiere.index', [
             'matieres' => $query->paginate(10),
             'semestres' => Semestre::select('id', 'semestre')->get(),
-            'programmes' => Programme::select('id', 'nom')->get(),
+            'programmes' => Programme::select('id', 'programme')->get(),
             'input' => $request->all('programme')
         ]);
 
@@ -44,7 +44,7 @@ class MatiereController extends Controller
         return view('backoffice.pages.matiere.form',[
             'matiere' => $matiere,
             'semestres' => Semestre::select('id', 'semestre')->get(),
-            'programmes' => Programme::select('id', 'nom')->get(),
+            'programmes' => Programme::select('id', 'programme')->get(),
         ]);
     }
 
@@ -66,7 +66,7 @@ class MatiereController extends Controller
         return view('backoffice.pages.matiere.form',[
             'matiere' => $matiere,
             'semestres' => Semestre::select('id', 'semestre')->get(),
-            'programmes' => Programme::select('id', 'nom')->get(),
+            'programmes' => Programme::select('id', 'programme')->get(),
         ]);
     }
 

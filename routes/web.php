@@ -14,14 +14,22 @@ use App\Http\Controllers\ModuleEtudiant\NiveauController;
 use App\Http\Controllers\ModuleEtudiant\ProgrammeController;
 use App\Http\Controllers\ModuleEtudiant\PromotionController;
 use App\Http\Controllers\moduleEtudiant\SemestreController;
-use App\Http\Controllers\ModuleEtudiant\SessionController;
+use App\Http\Controllers\ModuleEtudiant\AnneeUniversitaireController;
 use App\Http\Controllers\PartenaireController;
 use App\Livewire\Departements\GiEmploisTables;
 use App\Livewire\Departements\GiEtudiantsTables;
 use App\Livewire\Departements\GiMatieresTables;
+use App\Livewire\Departements\ImpEtudiantsTables;
+use App\Livewire\Departements\ImpMatieresTables;
 use App\Livewire\Departements\SeEmploisTables;
 use App\Livewire\Departements\SeEtudiantsTables;
 use App\Livewire\Departements\SeMatieresTables;
+use App\Livewire\Departements\StEtudiantsTables;
+use App\Livewire\Departements\StMatieresTables;
+use App\Livewire\Departements\TebEtudiantsTables;
+use App\Livewire\Departements\TebMatieresTables;
+use App\Livewire\Departements\TlEtudiantsTables;
+use App\Livewire\Departements\TlMatieresTables;
 use App\Livewire\Scolarite\CreateEtudiant;
 use App\Livewire\Scolarite\CreateInscription;
 use App\Livewire\Scolarite\EditEtudiant;
@@ -45,7 +53,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Routes de l'interface de la scolarité */
-Route::prefix('scolarite')->name('scolarite.')->group(function () {
+Route::prefix('scolarite')->middleware('scolarite')->name('scolarite.')->group(function () {
     Route::get('/etudiants', EtudiantTables::class)->name('etudiant.index');
     Route::get('/etudiants/create', CreateEtudiant::class)->name('etudiant.create');
     Route::get('/etudiant/edit/{etudiant}', EditEtudiant::class)->name('etudiant.edit');
@@ -56,7 +64,7 @@ Route::prefix('scolarite')->name('scolarite.')->group(function () {
 });
 
 /* Routes des interfaces des departements */
-Route::prefix('genieinfo')->name("genieinfo.")->group(function(){
+Route::prefix('genieinfo')->middleware('genie_info')->name("genieinfo.")->group(function(){
     Route::get("/etudiants", GiEtudiantsTables::class)->name('etudiantindex');
     Route::get("/matieres", GiMatieresTables::class)->name('matiereindex');
     Route::get('/list', [DepartementController::class, 'pdf'])->name('pdf');
@@ -65,37 +73,55 @@ Route::prefix('genieinfo')->name("genieinfo.")->group(function(){
     Route::get('/emploi-temps', GiEmploisTables::class)->name('emploiindex');
 });
 
-Route::prefix('scienceenergie')->name('scienceenergie.')->group(function(){
+Route::prefix('scienceenergie')->middleware('s_energie')->name('scienceenergie.')->group(function(){
     Route::get('/etudiants', SeEtudiantsTables::class)->name('etudiantindex');
     Route::get('/matieres', SeMatieresTables::class)->name('matiereindex');
     Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
 
 });
+
+Route::prefix('sciencetechnique')->middleware('s_technique')->name('sciencetechnique.')->group(function(){
+    Route::get('/etudiants', StEtudiantsTables::class)->name('etudiantindex');
+    Route::get('/matieres', StMatieresTables::class)->name('matiereindex');
+    // Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
+
+});
+
+Route::prefix('imp')->middleware('imp')->name('imp.')->group(function(){
+    Route::get('/etudiants', ImpEtudiantsTables::class)->name('etudiantindex');
+    Route::get('/matieres', ImpMatieresTables::class )->name('matiereindex');
+    // Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
+
+});
+
+Route::prefix('teb')->middleware('teb')->name('teb.')->group(function(){
+    Route::get('/etudiants', TebEtudiantsTables::class)->name('etudiantindex');
+    Route::get('/matieres', TebMatieresTables::class)->name('matiereindex');
+    // Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
+
+});
+
+Route::prefix('techniquelaboratoire')->middleware('t_laboratoire')->name('techniquelaboratoire.')->group(function(){
+    Route::get('/etudiants', TlEtudiantsTables::class)->name('etudiantindex');
+    Route::get('/matieres', TlMatieresTables::class)->name('matiereindex');
+    // Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
+
+});
 /* Fin des routes des interfaces des departements */
 
-
-Route::get('/', function () {
-    return view('frontoffice.home');
-});
-
-Route::get('/admin', function () {
-    return view('backoffice.dashboard');
-});
-
-
-Route::name('admin.')->group(function () {
-    Route::resource('home', HomeController::class)->except('create','store','edit','update','destroy','show');
+/* Routes de l'administrateur */
+Route::name('admin.')->middleware('admin')->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('galerie', GalerieController::class)->except('show');
     Route::resource('article', ArticleController::class)->except('show');
     Route::resource('partenaire', PartenaireController::class)->except('show');
 });
 
-Route::prefix('admin')->name('admin.')->group(function() {
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function() {
     Route::resource('promotion', PromotionController::class)->except('show');
     Route::resource('niveau', NiveauController::class)->except('show');
     Route::resource('semestre', SemestreController::class)->except('show');
-    Route::resource('session', SessionController::class)->except('show');
+    Route::resource('annee_universitaire', AnneeUniversitaireController::class)->except('show');
     Route::resource('matiere', MatiereController::class)->except('show');
     Route::resource('enseignant', EnseignantController::class)->except('show');
     Route::resource('departement', DepartementController::class)->except('show');
@@ -106,3 +132,24 @@ Route::prefix('admin')->name('admin.')->group(function() {
     // import
     Route::post('etudiant/importer',[EtudiantController::class,'importer'])->name('etudiant.importer');
 });
+/* Fin des routes de l'administrateur */
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::get('/home', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'deconnection']);
+Route::get('/create-account', [HomeController::class, 'formVerification']);
+Route::post('/create-account', [HomeController::class, 'verification'])->name('verify-matricule');
+
+
+Route::get('/admin', function () {
+    return view('backoffice.dashboard');
+})->middleware('admin');

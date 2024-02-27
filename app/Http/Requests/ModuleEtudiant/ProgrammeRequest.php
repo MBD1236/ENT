@@ -22,7 +22,7 @@ class ProgrammeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => ['required', 'min:2', 'unique:programmes'],
+            'programme' => ['required', 'min:2', 'unique:programmes'],
             'departement_id' => ['required']
         ];
     }

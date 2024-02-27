@@ -1,6 +1,6 @@
 @extends('backoffice.home')
 
-@section('title', 'Liste des sessions')
+@section('title', 'Liste des années universitaires')
 @section('content')
 
 @if(session('success'))
@@ -19,7 +19,7 @@
     <div class="card-body">
         <div class="d-flex flex-row justify-content-end mb-2">
             <div class="pt-2">
-                <a href="{{ route('admin.session.create') }}" class="btn btn-primary">
+                <a href="{{ route('admin.annee_universitaire.create') }}" class="btn btn-primary">
                     <i class="bi bi-plus-lg"></i>
                     <span>Ajouter</span>
                 </a>
@@ -30,18 +30,18 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">session</th>
+                        <th scope="col">Année Universitaire</th>
                         <th scope="col" class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ( $sessions as $k => $session )
+                    @foreach ( $annee_universitaires as $k => $annee_universitaire )
                     <tr>
                         <th scope="row">{{ $k+1 }}</td>
-                        <td>{{ $session->session }}</th>
+                        <td>{{ $annee_universitaire->annee_universitaire }}</th>
                         <td class="d-flex gap-1 justify-content-end ">
-                            <a href="{{ route('admin.session.edit', $session) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                            <form action="{{ route('admin.session.destroy', $session)}}" method="post">
+                            <a href="{{ route('admin.annee_universitaire.edit', $annee_universitaire) }}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                            <form action="{{ route('admin.annee_universitaire.destroy', $annee_universitaire)}}" method="post">
                                 @method('delete')
                                 @csrf
                                 <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
@@ -58,7 +58,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <ul class="pagination-rounded">
-                    {{$sessions->links()}}
+                    {{$annee_universitaires->links()}}
                 </ul>
             </div>
         </div>

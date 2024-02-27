@@ -8,7 +8,7 @@
 </div>
 <div class="card mt-2">
     <div class="card-body col-lg-10 m-auto">
-        <form class="vstack mt-4  gap-2" action="{{ route($programme->exists ? 'admin.programme.update': 'admin.programme.store', $programme) }}" method="post" enctype="multipart/form-data">
+        <form class="vstack mt-4  gap-2" action="{{ $programme->id ? route('admin.programme.update',  $programme) : route('admin.programme.store') }}" method="post" enctype="multipart/form-data">
 
             @method($programme->exists ? 'put' : 'post')
             @csrf

@@ -150,13 +150,13 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
                     <div class="form-floating">
-                        <select wire:model="session_id" id="session_id" class="form-control @error('session_id') is-invalid @enderror">
-                            <option value="0">Sélectionner une session</option>
-                            @foreach($sessions as $session)
-                                <option value="{{$session->id}}" wire:key='{{ $session->id }}'>{{ $session->session}}</option>
+                        <select wire:model="annee_universitaire_id" id="annee_universitaire_id" class="form-control @error('annee_universitaire_id') is-invalid @enderror">
+                            <option value="0">Sélectionner une année universitaire</option>
+                            @foreach($annee_universitaires as $annee_universitaire)
+                                <option value="{{$annee_universitaire->id}}" wire:key='{{ $annee_universitaire->id }}'>{{ $annee_universitaire->annee_universitaire}}</option>
                             @endforeach
                         </select>
-                        <div class="invalid-feedback">@error('session_id') {{ $message }} @enderror</div>
+                        <div class="invalid-feedback">@error('annee_universitaire_id') {{ $message }} @enderror</div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
@@ -186,7 +186,7 @@
                         <select wire:model="programme_id" id="programme_id" class="form-control @error('programme_id') is-invalid @enderror">
                             <option value="0">Sélectionner un programme</option>
                             @foreach($programmes as $programme)
-                                <option value="{{$programme->id}}" wire:key='{{ $programme->id }}'>{{ $programme->nom}}</option>
+                                <option value="{{$programme->id}}" wire:key='{{ $programme->id }}'>{{ $programme->programme}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-feedback">@error('programme_id') {{ $message }} @enderror</div>

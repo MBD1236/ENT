@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class SeEtudiantsTables extends Component
 {
-    public string $session = '';
+    public string $annee_universitaire = '';
     public $niveau = 0;
     public $searchProgramme = 0;
 
@@ -26,10 +26,10 @@ class SeEtudiantsTables extends Component
         if ($this->searchProgramme !== 0){
             $inscription->where('programme_id', $this->searchProgramme);
         }
-        //3- On filtre les etudiants du departement Science des Energies par session donnée
-        if ($this->session !== '') {
-            $inscription->WhereHas('session', function ($inscription){
-                $inscription->where('session', $this->session);
+        //3- On filtre les etudiants du departement Science des Energies par annee_universitaire donnée
+        if ($this->annee_universitaire !== '') {
+            $inscription->WhereHas('annee_universitaire', function ($inscription){
+                $inscription->where('annee_universitaire', $this->annee_universitaire);
             });
         }
         //3- On filtre les etudiants du departement Science des Energies par niveau donné
@@ -38,7 +38,7 @@ class SeEtudiantsTables extends Component
         }
         /* Si les trois conditions sont reunies: On aura la liste des etudiants du departement
         Science des Energies qui font le programme Science des Energies et le niveau tel(ex:Licence 1)
-        et la session (ex:2023-2024) */
+        et la annee_universitaire (ex:2023-2024) */
         return view('livewire.departements.se-etudiants-tables',[
             'etudiants' => $inscription->get(),
             'niveaux' => Niveau::all(),

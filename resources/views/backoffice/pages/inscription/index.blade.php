@@ -42,7 +42,7 @@
                         <th>Programme</th>
                         <th>Promotion</th>
                         <th>Niveau</th>
-                        <th>Session</th>
+                        <th>Année Universitaire</th>
                         <th>Photo</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -57,7 +57,7 @@
                         <td>{{ $inscription->programme->programme}}</td>
                         <td>{{ $inscription->promotion->promotion}}</td>
                         <td>{{ $inscription->niveau->niveau}}</td>
-                        <td>{{ $inscription->session->session}}</td>
+                        <td>{{ $inscription->annee_universitaire->annee_universitaire}}</td>
                         <td><img width="20px" height="20px" src="{{asset('storage/'.$inscription->etudiant->photo) }}" alt=""></td>
                         <td class="d-flex gap-2 justify-content-end w-100">
                             <a href="{{ route('admin.inscription.edit', $inscription) }}" class="btn btn-primary py-0 px-1 fs-6"><i class="bi bi-pencil-square"></i></a>

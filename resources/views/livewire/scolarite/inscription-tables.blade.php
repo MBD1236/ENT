@@ -31,7 +31,7 @@
                             <th>Programme</th>
                             <th>Promotion</th>
                             <th>Niveau</th>
-                            <th>Session</th>
+                            <th>annee_universitaire</th>
                             <th>Photo</th>
                             <th class="text-end">Actions</th>
                         </tr>
@@ -43,10 +43,10 @@
                             <th>{{ $k+1 }}</th>
                             <td>{{ $inscription->etudiant->ine}}</td>
                             <td>{{ $inscription->programme->departement->departement}}</td>
-                            <td>{{ $inscription->programme->nom}}</td>
+                            <td>{{ $inscription->programme->programme}}</td>
                             <td>{{ $inscription->promotion->promotion}}</td>
                             <td>{{ $inscription->niveau->niveau}}</td>
-                            <td>{{ $inscription->session->session}}</td>
+                            <td>{{ $inscription->annee_universitaire->annee_universitaire}}</td>
                             <td><img width="50px" src="{{asset('storage/'.$inscription->etudiant->photo) }}" alt="">
                             </td>
                             <td class="d-flex gap-2 justify-content-end w-100">

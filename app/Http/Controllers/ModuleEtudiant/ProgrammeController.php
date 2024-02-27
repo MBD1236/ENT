@@ -17,7 +17,7 @@ class ProgrammeController extends Controller
      */
     public function index()
     {
-        $programmes = Programme::paginate(3);
+        $programmes = Programme::paginate(10);
         return view('backoffice.pages.programme.index',[
             'programmes' => $programmes
         ]);

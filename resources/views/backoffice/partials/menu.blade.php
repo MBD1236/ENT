@@ -4,7 +4,7 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="{{ route('admin.dashboard')}}">
+      <a class="nav-link collapsed" href="/">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -16,18 +16,8 @@
       </a>
       <ul id="gestions-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ route('admin.etudiant.index') }}" class="active">
-            <i class="bi bi-circle"></i><span>Etudiants</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('admin.inscription.index') }}">
-            <i class="bi bi-circle"></i><span>Inscriptions</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('admin.session.index') }}">
-            <i class="bi bi-circle"></i><span>Sessions</span>
+          <a href="{{ route('admin.annee_universitaire.index') }}">
+            <i class="bi bi-circle"></i><span>Année Universitaires</span>
           </a>
         </li>
         <li>

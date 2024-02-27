@@ -49,9 +49,9 @@ class InscriptionTables extends Component
                     $query->where('promotion', 'LIKE', "%{$this->searchEtudiant}%");
                 });
 
-                // Recherche de session
-                $query->orWhereHas('session', function ($query)  {
-                    $query->where('session', 'LIKE', '%' . $this->searchEtudiant . '%');
+                // Recherche de annee_universitaire
+                $query->orWhereHas('annee_universitaire', function ($query)  {
+                    $query->where('annee_universitaire', 'LIKE', '%' . $this->searchEtudiant . '%');
                 });
 
                 // Recherche de programme

@@ -1,5 +1,7 @@
-/* @import "../../node_modules/bootstrap/dist/css/bootstrap"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.content {
-    height: 100vh;
+[x-cloak] {
+    display: none;
 }

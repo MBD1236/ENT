@@ -5,7 +5,7 @@ namespace App\Http\Requests\ModuleEtudiant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SessionRequest extends FormRequest
+class AnneeUniversitaireRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class SessionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route("session");
+        $id = $this->route("annee_universitaire");
         return [
-            'session' => ['required','string','min:9' , Rule::unique('sessions')->ignore($id, 'id')],
+            'annee_universitaire' => ['required','string','min:9' , Rule::unique('annee_universitaires')->ignore($id, 'id')],
         ];
     }
 }

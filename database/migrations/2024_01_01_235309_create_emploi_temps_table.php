@@ -6,7 +6,7 @@ use App\Models\Niveau;
 use App\Models\Programme;
 use App\Models\Promotion;
 use App\Models\Semestre;
-use App\Models\Session;
+use App\Models\AnneeUniversitaire;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('salle');
             $table->foreignIdFor(Programme::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Niveau::class)->constrained()->cascadeOnUpdate();
-            $table->foreignIdFor(Session::class)->constrained()->cascadeOnUpdate();
+            $table->foreignIdFor(AnneeUniversitaire::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Promotion::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Enseignant::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Matiere::class)->constrained()->cascadeOnUpdate();

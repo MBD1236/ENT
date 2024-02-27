@@ -16,7 +16,7 @@
                 <select class="form-select" type="search" wire:model.live='searchProgramme'>
                     <option value="0">programme</option>
                     @foreach ($programmes as $programme)
-                    <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->nom }}</option>
+                    <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->programme }}</option>
                     @endforeach
                 </select>
             </div>

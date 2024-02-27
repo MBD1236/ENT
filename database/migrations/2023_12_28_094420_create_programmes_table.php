@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('programmes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
+            $table->string('programme');
             $table->foreignIdFor(Departement::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

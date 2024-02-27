@@ -54,7 +54,7 @@
                 <td>{{ $inscription->etudiant->prenom}}</td>
                 <td>{{ $inscription->niveau->niveau}}</td>
                 <td>{{ $inscription->promotion->promotion}}</td>
-                <td>{{ $inscription->programme->nom}}</td>
+                <td>{{ $inscription->programme->programme}}</td>
             </tr>
             @endforeach
         </tbody>

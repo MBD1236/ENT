@@ -7,7 +7,7 @@ use App\Models\Inscription;
 use App\Models\Niveau;
 use App\Models\Programme;
 use App\Models\Promotion;
-use App\Models\Session;
+use App\Models\AnneeUniversitaire;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -50,7 +50,7 @@ class EditInscription extends Component
     public $pere;
 
     /* les propriétés de la table inscription */
-    public $session_id;
+    public $annee_universitaire_id;
     public $promotion_id;
     public $niveau_id;
     public $programme_id;
@@ -68,7 +68,7 @@ class EditInscription extends Component
             "etudiant_id" => ["required"],
             "promotion_id" => ["required"],
             "niveau_id" => ["required"],
-            "session_id" => ["required"],
+            "annee_universitaire_id" => ["required"],
             "programme_id" => ["required"],
         ];
     }
@@ -126,7 +126,7 @@ class EditInscription extends Component
         $this->nom_tuteur = $this->etudiant->nom_tuteur;
         $this->telephone_tuteur = $this->etudiant->telephone_tuteur;
 
-        $this->session_id = $inscription->session_id;
+        $this->annee_universitaire_id = $inscription->annee_universitaire_id;
         $this->programme_id = $inscription->programme_id;
         $this->niveau_id = $inscription->niveau_id;
         $this->promotion_id = $inscription->promotion_id;
@@ -175,7 +175,7 @@ class EditInscription extends Component
 
     /**
      * render : la méthode qui rend le composant edit-inscription avec les
-     * données des sessions, promotions, niveaux et programmes.
+     * données des annee_universitaires, promotions, niveaux et programmes.
      *
      * @return view
      */
@@ -184,7 +184,7 @@ class EditInscription extends Component
     {
 
         return view('livewire.scolarite.edit-inscription',[
-            'sessions' => Session::all(),
+            'annee_universitaires' => AnneeUniversitaire::all(),
             'promotions' => Promotion::all(),
             'niveaux' => Niveau::all(),
             'programmes' => Programme::all(),

@@ -1,10 +1,10 @@
 <?php
 
+use App\Models\AnneeUniversitaire;
 use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Programme;
 use App\Models\Promotion;
-use App\Models\Session;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(Programme::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Promotion::class)->constrained()->cascadeOnUpdate();
             $table->foreignIdFor(Niveau::class)->constrained()->cascadeOnUpdate();
-            $table->foreignIdFor(Session::class)->constrained()->cascadeOnUpdate();
+            $table->foreignIdFor(AnneeUniversitaire::class)->constrained()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
