@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Departements;
 
-use App\Models\Inscription;
+use App\Models\Etudiant;
 use App\Models\Niveau;
 use App\Models\Programme;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -13,35 +13,36 @@ use Livewire\Component;
 
 class GiEtudiantsTables extends Component
 {
-    public string $annee_universitaire = '';
+    public string $session = '';
     public $niveau = 0;
     public $searchProgramme = 0;
-    // public $inscription;
-
+    public $search = '';
+    
 
     public function generatePDF()
     {
-        $inscription = Inscription::query()->orderBy("created_at","desc");
-        $inscription->orWhereHas('programme', function ($inscription){
-            $inscription->where('departement_id', 1);
+        $etudiant = Etudiant::query()->orderBy("created_at","desc");
+        $etudiant->orWhereHas('programme', function ($etudiant){
+            $etudiant->where('departement_id', 1);
         });
+
         //2- On filtre les etudiants du departement Génie Informatique par programme donné
         if ($this->searchProgramme !== 0){
-            $inscription->where('programme_id', $this->searchProgramme);
+            $etudiant->where('programme_id', $this->searchProgramme);
         }
-        //3- On filtre les etudiants du departement Génie Informatique par annee_universitaire donnée
-        if ($this->annee_universitaire !== '') {
-            $inscription->WhereHas('annee_universitaire', function ($inscription){
-                $inscription->where('annee_universitaire', $this->annee_universitaire);
+        //3- On filtre les etudiants du departement Génie Informatique par session donnée
+        if ($this->session !== '') {
+            $etudiant->WhereHas('session', function ($etudiant){
+                $etudiant->where('session', $this->session);
             }); 
         }
-        //3- On filtre les etudiants du departement Génie Informatique par niveau donné
+        //4- On filtre les etudiants du departement Génie Informatique par niveau donné
         if ($this->niveau !== 0) {
-            $inscription->where('niveau_id', $this->niveau);
+            $etudiant->where('niveau_id', $this->niveau);
         }
 
-        $inscriptions = $inscription->get();
-        $pdf = PDF::loadView('livewire.pdf.liste-etudiant', compact('inscriptions'));
+        $etudiants = $etudiant->get();
+        $pdf = PDF::loadView('livewire.pdf.liste-etudiant', compact('etudiants'));
         return response()->streamDownload(function () use($pdf) {
             echo  $pdf->stream();
         }, 'listeGenieInfo.pdf');
@@ -49,36 +50,46 @@ class GiEtudiantsTables extends Component
     }
 
     #[Layout("components.layouts.departement")]
+
     public function render()
     {
-
         // 1- pour un debut je retourne la liste des etudiants inscrits au departement Génie Informatique
-        $inscription = Inscription::query()->orderBy("created_at","desc");
-        $inscription->orWhereHas('programme', function ($inscription){
-            $inscription->where('departement_id', 1);
-        });
+        $etudiant = Etudiant::query()->orderBy("created_at","desc");
+        // $etudiant->orWhereHas('programme', function ($etudiant){
+        //     $etudiant->where('departement_id', 1);
+        // });
+
         //2- On filtre les etudiants du departement Génie Informatique par programme donné
         if ($this->searchProgramme !== 0){
-            $inscription->where('programme_id', $this->searchProgramme);
+            $etudiant->where('programme_id', $this->searchProgramme);
         }
-        //3- On filtre les etudiants du departement Génie Informatique par annee_universitaire donnée
-        if ($this->annee_universitaire !== '') {
-            $inscription->WhereHas('annee_universitaire', function ($inscription){
-                $inscription->where('annee_universitaire', $this->annee_universitaire);
-            }); 
-        }
-        //3- On filtre les etudiants du departement Génie Informatique par niveau donné
-        if ($this->niveau !== 0) {
-            $inscription->where('niveau_id', $this->niveau);
-        }
-        /* Si les trois conditions sont reunies: On aura la liste des etudiants du departement
-        Génie Informatique qui font le programme Génie Informatique et le niveau tel(ex:Licence 1)
-        et la annee_universitaire (ex:2023-2024) */
-        return view('livewire.departements.gi-etudiants-tables',[
-            'etudiants' => $inscription->get(),
-            'niveaux' => Niveau::all(),
-            'programmes' => Programme::where('departement_id',1)->get(),
-        ]);
 
+        //3- On filtre les etudiants du departement Génie Informatique par niveau donné
+        if ($this->session !== '') {
+            $etudiant->where(function ($query) {
+                $query->where('session', 'like', '%'.$this->session. '%');
+            });
+        }
+
+        // Ajoutez cette condition pour la recherche globale
+        if ($this->search !== '') {
+            $etudiant->where(function ($query) {
+                $query->where('nom', 'like', '%' . $this->search . '%')
+                ->orWhere('prenom', 'like', '%' . $this->search . '%')
+                ->orWhere('telephone', 'like', '%' . $this->search . '%')
+                ->orWhere('email', 'like', '%' . $this->search . '%')
+                ->orWhere('programme', 'like', '%' . $this->search . '%')
+                ->orWhere('ine', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        $etudiants = $etudiant->paginate(25);
+
+        return view('livewire.departements.gi-etudiants-tables',[
+            'etudiants' => $etudiants,
+            'niveaux' => Niveau::all(),
+            'programmes' => Programme::all(),
+        ]);
+        
     }
 }

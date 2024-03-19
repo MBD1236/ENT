@@ -1,48 +1,37 @@
 <div>
-    <div class="pagetitle">
-        <h1>
-            Liste des etudiants du departement Génie Informatique
-        </h1>
+    <div class="pagetitle  py-3 text-center">
+        <h1>Liste de tous les étudiants</h1>
     </div>
 
-
-    <div class="mb-1 card">
+    <div class="mb-0 card">
         <div class="card-body mt-4">
-            <div class="row ">
-                <div class="col-md-2">
-                    <select class="form-select" type="search" wire:model.live='niveau'>
-                        <option value="0">niveau</option>
-                        @foreach ($niveaux as $niveau)
-                        <option value="{{ $niveau->id }}" wire:key="{{ $niveau->id }}">{{ $niveau->niveau }}</option>
-                        @endforeach
-                    </select>
+            <div class="row ">               
+                <div class="col-md-6 col-lg-3 col-sm-12 my-2 d-flex flex-row">
+                    <input  type="text" class="form-control" placeholder="Research by session..." wire:model.debounce.900ms.live="session">
+                    @if (!$session)
+                        <span class="bntSearch"><i class="bi bi-search"></i></span>
+                    @endif
                 </div>
-      
-              <div class="col-md-2">
-                    <input  type="text" class="form-control" placeholder="session..."
-                      wire:model.debounce.900ms.live="session">
-              </div>
-              <div class="col-md-2">
-                  <select class="form-select" type="search" wire:model.live='searchProgramme'>
-                      <option value="0">programme</option>
-                      @foreach ($programmes as $programme)
-                      <option value="{{ $programme->id }}" wire:key="{{ $programme->id }}">{{ $programme->programme }}</option>
-                      @endforeach
-                  </select>
-              </div>
-      
-              <div class="col-md-4">
-                  <button class="btn btn-primary" wire:click="generatePDF">
-                      <i class="bi bi-file-pdf"></i>
-                      <span>Télecharger la liste(Pour impression)</span>
-                  </button>
-              </div>
-              <div class="col-md-2"><a href="{{ route('genieinfo.pdf') }}">imprime</a></div>
+                <div class="col-md-6 col-lg-5 col-sm-12 my-2 d-flex flex-row">
+                    <input type="search" name="search" class="form-control" placeholder="Research by any field.." wire:model.debounce.500ms.live="search">
+                    @if (!$search)
+                        <span class="bntSearch"><i class="bi bi-search"></i></span>
+                    @endif
+                </div>
+                <div class="col-md-6 col-lg-2 col-sm-12 my-2 text-end">
+                    <button class="btn btn-primary" wire:click="generatePDF">
+                        <i class="bi bi-file-pdf"></i>
+                        <span>Télecharger</span>
+                    </button>
+                </div>
+                <div class="col-md-6 col-lg-2 col-sm-12 my-2">
+                    <a href="{{ route('genieinfo.pdf') }}" class="btn btn-light">Imprimer</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="card mt-2">
-        
+    
+    <div class="card">
         <div class="card-body">
             <div class="table-responsive-sm">
                 <table id="tableau" class="table table-hover table-centered table-bordered mb-0 mt-4">
@@ -52,27 +41,32 @@
                             <th>INE</th>
                             <th>Nom</th>
                             <th>Prenom</th>
-                            <th>Niveau</th>
-                            <th>Promotion</th>
+                            <th>Session</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
                             <th>Programme</th>
-
+                            <th>Photo</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @forelse ($etudiants as $k => $etudiant)
-                        <tr wire:key="{{ $etudiant->id }}">
-                            <td>{{ $k+1 }}</td>
-                            <td>{{ $etudiant->etudiant->ine}}</td>
-                            <td>{{ $etudiant->etudiant->nom}}</td>
-                            <td>{{ $etudiant->etudiant->prenom}}</td>
-                            <td>{{ $etudiant->niveau->niveau}}</td>
-                            <td>{{ $etudiant->promotion->promotion}}</td>
-                            <td>{{ $etudiant->programme->programme}}</td>
-
-                        </tr>
+                            <tr wire:key="{{ $etudiant->id }}">
+                                <td>{{ $k+1 }}</td>
+                                <td>{{ $etudiant->ine}}</td>
+                                <td>{{ $etudiant->nom}}</td>
+                                <td>{{ $etudiant->prenom}}</td>
+                                <td>{{ $etudiant->session}}</td>
+                                <td>{{ $etudiant->telephone}}</td>
+                                <td>{{substr( $etudiant->email, 0,10)}}...</td>
+                                <td>{{ $etudiant->programme}}</td>
+                                <td><img width="40px" height="30px" src="{{asset('storage/'.$etudiant->photo) }}" alt="Mr/Mme"></td>
+                            </tr>
                         @empty
-                        <div class="alert alert-info">Aucune donnée ne correspond à cette recherche !</div>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="alert alert-info text-center fs-6 fw-bold">Aucune donnée ne correspond à cette recherche !</div>
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>

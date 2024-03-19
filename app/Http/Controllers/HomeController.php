@@ -11,12 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
 
+/**
+ * HomeController
+ */
 class HomeController extends Controller
-{
+{    
     public function index(){
         $role = Auth::user()->role->role ?? '';
         if ($role === 'genie_info')
-            return redirect()->route('genieinfo.etudiantindex');
+            return redirect()->route('genieinfo.etudiants');
         elseif ($role === 's_energie')
             return redirect()->route('scienceenergie.etudiantindex');
         elseif ($role === 's_technique')
@@ -32,25 +35,25 @@ class HomeController extends Controller
         elseif ($role === 'admin')
             return redirect()->route('admin.etudiant.index');
     }
+    
     public function deconnection() {
         return redirect()->route('login');
     }
 
     public function formVerification() {
-        Role::create([
-            'role' => 't_laboratoire'
-        ]);
+        // Role::create([
+        //     'role' => 't_laboratoire'
+        // ]);
        
-       
-        User::create([
-            'nom' => 'john7',
-            'prenom' => 'doe7',
-            'email' => 'john7@doe7.gn',
-            'matricule' => '7777',
-            'role_id' => 8,
-            'password' => Hash::make('1234'),
-        ]);
-        
+        // User::create([
+        //     'nom' => 'john7',
+        //     'prenom' => 'doe7',
+        //     'email' => 'john7@doe7.gn',
+        //     'matricule' => '7777',
+        //     'role_id' => 8,
+        //     'password' => Hash::make('1234'),
+        // ]);
+
         return view('auth.verify-matricule');
     }
 
@@ -65,5 +68,13 @@ class HomeController extends Controller
         else {
             return redirect()->back()->with('error', 'INE non trouvé');
         }
+    }
+
+    public function homeHome(){
+        return view("backoffice.home");
+    }
+
+    public function dashboardAdmin(){
+        return view("backoffice.dashboard");
     }
 }

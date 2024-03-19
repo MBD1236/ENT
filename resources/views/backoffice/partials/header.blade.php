@@ -51,7 +51,7 @@
         <span class="d-none d-lg-block fs-5 mx-2">ENT IST-MAMOU</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    </div><!-- End Lo go -->
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
