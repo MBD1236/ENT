@@ -158,7 +158,7 @@ class EditEtudiant extends Component
             'photo' => !is_string($this->photo) ? ['nullable','image', 'mimes:jpg,jpeg,png,gif,svg', 'max:1024'] : [],
         ];
     }
-        
+
     /**
      * update: la méthode de modification de l'etudiant
      * on recupere les données validées pour le cas des fichiers on regarde s'ils ne sont
