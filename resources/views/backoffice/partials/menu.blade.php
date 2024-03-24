@@ -4,7 +4,7 @@
   <ul class="sidebar-nav" id="sidebar-nav">
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/">
+      <a class="nav-link collapsed" href="{{ route('admin.dashboard') }} ">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -14,10 +14,20 @@
       <a class="nav-link " data-bs-target="#gestions-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Gestions</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
-      <ul id="gestions-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <ul id="gestions-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav"> 
+        <li>
+          <a href="{{ route('admin.etudiant.index') }}" class="active">
+            <i class="bi bi-circle"></i><span>Etudiants</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('admin.inscription.index') }}">
+            <i class="bi bi-circle"></i><span>Inscriptions</span>
+          </a>
+        </li>
         <li>
           <a href="{{ route('admin.annee_universitaire.index') }}">
-            <i class="bi bi-circle"></i><span>Année Universitaires</span>
+            <i class="bi bi-circle"></i><span>Année Universitaire</span>
           </a>
         </li>
         <li>

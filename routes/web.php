@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GalerieController;
 use App\Http\Controllers\GenieInfoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Import\EmploiController;
 use App\Http\Controllers\ModuleEtudiant\DepartementController;
 use App\Http\Controllers\ModuleEtudiant\EnseignantController;
 use App\Http\Controllers\ModuleEtudiant\EtudiantController;
@@ -17,8 +18,12 @@ use App\Http\Controllers\moduleEtudiant\SemestreController;
 use App\Http\Controllers\ModuleEtudiant\AnneeUniversitaireController;
 use App\Http\Controllers\PartenaireController;
 use App\Livewire\Departements\GiEmploisTables;
+use App\Livewire\Departements\GiEnseigantsTables;
+use App\Livewire\Departements\GiEnseignantsTables;
 use App\Livewire\Departements\GiEtudiantsTables;
+use App\Livewire\Departements\GiInscriptionsTables;
 use App\Livewire\Departements\GiMatieresTables;
+use App\Livewire\Departements\GiProgrammeCoursTables;
 use App\Livewire\Departements\ImpEtudiantsTables;
 use App\Livewire\Departements\ImpMatieresTables;
 use App\Livewire\Departements\SeEmploisTables;
@@ -30,6 +35,11 @@ use App\Livewire\Departements\TebEtudiantsTables;
 use App\Livewire\Departements\TebMatieresTables;
 use App\Livewire\Departements\TlEtudiantsTables;
 use App\Livewire\Departements\TlMatieresTables;
+use App\Livewire\Etudiants\EntEtudiantsListTables;
+use App\Livewire\Etudiants\EntEtudiantsTables;
+use App\Livewire\Etudiants\EntInscriptionListTables;
+use App\Livewire\Etudiants\EntInscriptionTables;
+use App\Livewire\Etudiants\EntMatiereTables;
 use App\Livewire\Scolarite\CreateEtudiant;
 use App\Livewire\Scolarite\CreateInscription;
 use App\Livewire\Scolarite\EditEtudiant;
@@ -51,6 +61,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// les routes pour les etudiants
+Route::prefix('ent-etudiant')->name('etudiant.')->group(function(){
+    Route::get("/inscription", EntEtudiantsTables::class)->name('inscription');
+    Route::get("/list-inscrit", EntEtudiantsListTables::class)->name('list-inscrit');
+    Route::get('/reinscription', EntInscriptionTables::class)->name('reinscription');
+    Route::get('/list-reinscrit', EntInscriptionListTables::class)->name('list-reinscrit');
+    Route::get('/matiere', EntMatiereTables::class)->name('matiere');
+});
+
 
 /* Routes de l'interface de la scolarité */
 Route::prefix('scolarite')->middleware('scolarite')->name('scolarite.')->group(function () {
@@ -65,15 +84,19 @@ Route::prefix('scolarite')->middleware('scolarite')->name('scolarite.')->group(f
 
 /* Routes des interfaces des departements */
 Route::prefix('genieinfo')->middleware('genie_info')->name("genieinfo.")->group(function(){
-    Route::get("/etudiants", GiEtudiantsTables::class)->name('etudiantindex');
-    Route::get("/matieres", GiMatieresTables::class)->name('matiereindex');
-    Route::get('/list', [DepartementController::class, 'pdf'])->name('pdf');
+    Route::get("/etudiants", GiEtudiantsTables::class)->name('etudiants');
+    Route::get("/matieres", GiMatieresTables::class)->name('matieres');
+    Route::get('/pdf', [DepartementController::class, 'pdf'])->name('pdf');
+    Route::get("/enseignants", GiEnseignantsTables::class)->name('enseignants');
+    Route::get("/enseigners", GiProgrammeCoursTables::class)->name('enseigners');
+    Route::get("/inscriptions", GiInscriptionsTables::class)->name('inscriptions');
 
-
-    Route::get('/emploi-temps', GiEmploisTables::class)->name('emploiindex');
+    // route pour emploi
+    Route::get('/emploi-temps', GiEmploisTables::class)->name('emploi-temps');
+    Route::post('upload', [EmploiController::class, 'upload'])->name('upload');
 });
 
-Route::prefix('scienceenergie')->middleware('s_energie')->name('scienceenergie.')->group(function(){
+Route::prefix('scienceenergie')->middleware('s_energie','admin')->name('scienceenergie.')->group(function(){
     Route::get('/etudiants', SeEtudiantsTables::class)->name('etudiantindex');
     Route::get('/matieres', SeMatieresTables::class)->name('matiereindex');
     Route::get('/emploi-temps', SeEmploisTables::class)->name('emploiindex');
@@ -110,8 +133,9 @@ Route::prefix('techniquelaboratoire')->middleware('t_laboratoire')->name('techni
 /* Fin des routes des interfaces des departements */
 
 /* Routes de l'administrateur */
-Route::name('admin.')->middleware('admin')->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::name('admin.')->group(function () {
+    Route::get('homeHome', [HomeController::class, 'homeHome'])->name('homeHome');
+    Route::get('dashboard-admin', [HomeController::class, 'dashboardAdmin'])->name('dashboard');
     Route::resource('galerie', GalerieController::class)->except('show');
     Route::resource('article', ArticleController::class)->except('show');
     Route::resource('partenaire', PartenaireController::class)->except('show');
@@ -150,6 +174,8 @@ Route::get('/create-account', [HomeController::class, 'formVerification']);
 Route::post('/create-account', [HomeController::class, 'verification'])->name('verify-matricule');
 
 
-Route::get('/admin', function () {
-    return view('backoffice.dashboard');
-})->middleware('admin');
+// Route::get('/admin', function () {
+//     return view('backoffice.dashboard');
+// })->name('dashboard')->middleware('admin');
+
+

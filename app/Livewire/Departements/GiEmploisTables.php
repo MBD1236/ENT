@@ -3,7 +3,6 @@
 namespace App\Livewire\Departements;
 
 use App\Http\Requests\ModuleEtudiant\EtudiantRequest;
-use App\Models\Departement;
 use App\Models\EmploiTemps;
 use App\Models\Enseignant;
 use App\Models\Matiere;
@@ -11,24 +10,27 @@ use App\Models\Niveau;
 use App\Models\Programme;
 use App\Models\Promotion;
 use App\Models\Semestre;
+use App\Models\annee_universitaire;
 use App\Models\AnneeUniversitaire;
+use Illuminate\Http\Request;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GiEmploisTables extends Component
 {
-    public $niveau = 0;
+    public $semestre = 0;
     public $annee_universitaire = 0;
     public $searchProgramme = 0;
+    public $promotion = 0;
     public $addline = false;
     public $editingId;
 
-    public $horaire;
     public $jour;
+    public $horaire;
     public $matiere_id;
     public $enseignant_id;
     public $programme_id;
-    public $niveau_id;
     public $promotion_id;
     public $semestre_id;
     public $annee_universitaire_id;
@@ -36,12 +38,11 @@ class GiEmploisTables extends Component
 
 
     protected $rules = [
-        'horaire' => ['required','string'],
         'jour' => ['required','string'],
+        'horaire' => ['required','string'],
         'matiere_id' => ['required'],
         'enseignant_id' => ['required'],
         'programme_id' => ['required'],
-        'niveau_id' => ['required'],
         'promotion_id' => ['required'],
         'semestre_id' => ['required'],
         'annee_universitaire_id' => ['required'],
@@ -57,12 +58,11 @@ class GiEmploisTables extends Component
 
     public function edit(EmploiTemps $emploi) {
         $this->editingId = $emploi->id;
-        $this->horaire = $emploi->horaire;
         $this->jour = $emploi->jour;
+        $this->horaire = $emploi->horaire;
         $this->matiere_id = $emploi->matiere_id;
         $this->enseignant_id = $emploi->enseignant_id;
         $this->programme_id = $emploi->programme_id;
-        $this->niveau_id = $emploi->niveau_id;
         $this->promotion_id = $emploi->promotion_id;
         $this->semestre_id = $emploi->semestre_id;
         $this->annee_universitaire_id = $emploi->annee_universitaire_id;
@@ -78,18 +78,23 @@ class GiEmploisTables extends Component
         session()->flash('success', 'Modification effectuée avec succès!');
 
     }
+
     public function cancel() {
         $this->reset('editingId');
     }
+    
     public function delete(EmploiTemps $emploi) {
         $emploi->delete();
         session()->flash('success', 'Suppression effectuée avec succès!');
     }
+
     public function save() {
         $data = $this->validate();
         EmploiTemps::create($data);
-        $this->reset('horaire','jour','salle','matiere_id','enseignant_id','annee_universitaire_id',
-            'promotion_id','niveau_id','programme_id',);
+        $this->reset(
+            'jour','horaire','salle','matiere_id','enseignant_id',
+            'annee_universitaire_id', 'promotion_id','programme_id',
+        );
 
         session()->flash('success', 'Ajout effectuée avec succès!');
     }
@@ -101,38 +106,47 @@ class GiEmploisTables extends Component
     #[Layout("components.layouts.departement")]
     public function render()
     {
+        // $query = EmploiTemps::all();
+       
+        $query = EmploiTemps::query()->orderBy('created_at', 'desc');
 
-        $query = EmploiTemps::query()->orderBy('created_at', 'asc');
-        $query->orWhereHas('programme', function ($query) {
-            $query->where('departement_id', 1);
-        });
-
-        /* je recupère les matieres ensuite à travers "orWhereHas" je recupère la rélation "departement"
-        qui lie la matiere au departement, ensuite recuperer le departement Génie Informatique */
-        $matiere = Matiere::query()->orderBy('created_at', 'asc');
-        $matiere->orWhereHas('programme', function ($matiere) {
-            $matiere->where('departement_id', 1);
-        });
-        //2- On filtre les etudiants du departement Génie Informatique par programme donné
-        if ($this->searchProgramme !== 0){
+        if ($this->searchProgramme !== 0) {
             $query->where('programme_id', $this->searchProgramme);
         }
-        if($this->niveau !== 0) {
-            $query->where("niveau_id", $this->niveau);
+
+        if ($this->promotion !== 0) {
+            $query->where('promotion_id', $this->promotion);
         }
-        if($this->annee_universitaire !== 0) {
+
+        if ($this->semestre !== 0) {
+            $query->where('semestre_id', $this->semestre);
+        }
+
+        // pour filtrer par annee_universitaire
+        if ($this->annee_universitaire !== 0) {
             $query->where("annee_universitaire_id", $this->annee_universitaire);
         }
 
-        return view('livewire.departements.gi-emplois-tables',[
-            'emplois' => $query->paginate(10),
-            'matieres' => $matiere->get(),
+        $emplois = $query->paginate(10);
+
+
+        $matieres = Matiere::query()
+            ->when($this->searchProgramme !== 0, function ($query) {
+                $query->whereHas('programme', function ($subquery) {
+                    $subquery->where('departement_id', 1);
+                });
+            })
+            ->orderBy('created_at', 'asc') // Tri par ordre ascendant
+            ->get();
+
+        return view('livewire.departements.gi-emplois-tables', [
+            'emplois' => $emplois,
+            'matieres' => $matieres,
             'enseignants' => Enseignant::all(),
-            'niveaux' => Niveau::all(),
-            'promotions' => Promotion::all(),
             'semestres' => Semestre::all(),
-            'annee_universitaires' => AnneeUniversitaire::orderBy('created_at', 'desc')->paginate(1),
-            'programmes' => Programme::where('departement_id',1)->get(),
+            'programmes' => Programme::all(),
+            'promotions' => Promotion::orderBy('created_at', 'desc')->paginate(5),
+            'annee_universitaires' => AnneeUniversitaire::orderBy('created_at', 'desc')->paginate(5),
         ]);
     }
 }

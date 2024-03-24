@@ -21,7 +21,7 @@
                             {{ __('Accueil') }}
                         </x-nav-link>
                     @elseif ((Auth::user()->role->role === 'genie_info') || (Auth::user()->role->role === 's_energie'))
-                        <x-nav-link href="{{ route('genieinfo.etudiantindex') }}" :active="request()->routeIs('scolarite.etudiant.index')">
+                        <x-nav-link href="{{ route('genieinfo.etudiants') }}" :active="request()->routeIs('genieinfo.etudiants')">
                             {{ __('Accueil') }}
                         </x-nav-link>
                     @endif

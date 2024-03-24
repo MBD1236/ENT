@@ -2,13 +2,12 @@
     <div class="mb-1 card">
         <div class="row m-auto">
             <div class="pagetitle card-header my-2">
-                <h1>Liste des matières du departement Génie Informatique</h1>               
+                <h1>Liste des matières du département</h1>               
             </div>
         </div>
 
         <div class="card-body mt-4">
             <div class="row col-12 m-auto">
-                {{-- pour sélectionner un département --}}
                 <div class="col-md-4 col-lg-3 col-sm-12">
                     <select class="form-select" type="search" wire:model.live='semestre'>
                         <option value="0">Selectionner un semestre</option>
@@ -194,20 +193,20 @@
             </div>
         </div>
 
-        <div class="card-footer mt-1">
+        {{-- <div class="card-footer mt-1">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 align-items-start">
-                    {{-- <p> <strong>Affichage de </strong>{{ $matieres->firstItem() }} - {{ $matieres->lastItem() }}<strong> sur </strong>{{ $matieres->total() }}<strong> éléments </strong> </p> --}}
+                    <p> <strong>Affichage de </strong>{{ $matieres->firstItem() }} - {{ $matieres->lastItem() }}<strong> sur </strong>{{ $matieres->total() }}<strong> éléments </strong> </p>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 d-flex justify-content-end">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            {{-- {{ $matieres->links('livewire.pagination.bootstrap') }} --}}
+                            {{ $matieres->links('livewire.pagination.bootstrap') }}
                         </ul>
                     </nav>
                 </div>
             </div>  
-        </div>
+        </div> --}}
     </div>
     
 </div>
